@@ -18,8 +18,10 @@ public class Main {
         // display intro
         GameDisplay.displayWelcomeMessage();
         GameDisplay.displayGameSummary();
+        GameDisplay.waitForEnter();
         GameDisplay.displayInstructionsPage2();
         GameDisplay.displayInstructionsPage3();
+        GameDisplay.waitForEnter();
 
         // main menu loop
         boolean running = true;
@@ -28,13 +30,18 @@ public class Main {
             System.out.printf("           MAIN MENU%n");
             System.out.printf("══════════════════════════════════════%n");
             System.out.printf("1. New Game%n");
-            System.out.printf("2. Quit%n");
-            System.out.print("Enter choice (1-2): ");
+            System.out.printf("2. Load Game%n");
+            System.out.printf("3. Quit%n");
+            System.out.print("Enter choice (1-3): ");
 
-            int menuChoice = GameDisplay.getPlayerChoice(1, 2);
+            int menuChoice = GameDisplay.getPlayerChoice(1, 3);
             switch (menuChoice) {
                 case 1 -> runNewGame();
                 case 2 -> {
+                    System.out.println("\nLoad game coming soon! Start a new game for now.");
+                    GameDisplay.waitForEnter();
+                }
+                case 3 -> {
                     System.out.printf("Thanks for playing Silicon Valley Trail!%n");
                     running = false;
                 }
@@ -45,11 +52,12 @@ public class Main {
     private static void runNewGame() {
 
         // name this save
-        System.out.printf("%n── NAME YOUR SAVE ───────────────────%n");
+        System.out.printf("%n── WHAT WOULD YOU LIKE TO CALL THIS GAME ───────%n");     //use later for saving and retrieving game
         String sessionName = GameDisplay.getValidatedName(
-                "Name this save (e.g. 'easy run' or 'November 10 attempt')", 100);
+                "Game Name: (e.g. 'easy run' or 'November 10 attempt')", 100);
 
         // collect team names// collect team names — 20 char limit
+
         System.out.printf("%n── BUILD YOUR TEAM ──────────────────%n");
         String founderName = GameDisplay.getValidatedName("Founder name", 20);
         String eng1 = GameDisplay.getValidatedName("Engineer 1 name", 20);
@@ -94,13 +102,13 @@ public class Main {
 
         System.out.printf("%nGood luck, %s! The Silicon Prairie believes in you.%n",
                 founderName);
-        GameDisplay.waitForEnter();
+        // GameDisplay.waitForEnter();
 
         double koPrice1 = stockApi.getKoClosePrice();
         session.setInitialKoPrice(koPrice1);
         session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice1));
         System.out.println(stockApi.getMarketMessage(koPrice1, session.getRationCostMultiplier()));
-        GameDisplay.waitForEnter();
+        // GameDisplay.waitForEnter();
 
         // ── GAME LOOP ──────────────────────────────────────────────
         while (!session.isGameOver() && !session.hasArrived()) {
@@ -157,21 +165,21 @@ public class Main {
                             System.out.println("📊 KO hasn't moved since Lincoln. Markets holding steady.");
                         }
                         System.out.println(stockApi.getMarketMessage(koPrice2, session.getRationCostMultiplier()));
-                        GameDisplay.waitForEnter();
+//                        GameDisplay.waitForEnter();
                     }
 
                     if (chosenNext.equals("Santa Clara School of Law")) {
                         double koPrice3 = stockApi.getKoClosePrice();
                         session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice3));
                         System.out.println(stockApi.getMarketMessage(koPrice3, session.getRationCostMultiplier()));
-                        GameDisplay.waitForEnter();
+//                        GameDisplay.waitForEnter();
                     }
 
                     if (chosenNext.equals("San Francisco")) {
                         session.setHasArrived(true);
                         GameDisplay.displayVictory(session);
                         new ScoringService().calculateFinalScore(session);
-                        GameDisplay.waitForEnter();
+//                        GameDisplay.waitForEnter();
                     }
                 }
 

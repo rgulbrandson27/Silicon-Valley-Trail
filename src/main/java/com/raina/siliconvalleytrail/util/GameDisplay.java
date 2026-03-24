@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class GameDisplay {
 
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void displayWelcomeMessage() {
         System.out.printf("╔══════════════════════════════════════╗%n");
         System.out.printf("║        SILICON VALLEY TRAIL  🚗      ║%n");
@@ -17,7 +19,7 @@ public class GameDisplay {
         System.out.printf("──────────────────────────────────────────%n");
         System.out.printf("You are the founder of a scrappy startup team%n");
         System.out.printf("with a discreet make-shift office%n");
-        System.out.printf("in the SILICON PRAIRIE!%n");
+        System.out.printf("in the SILICON PRAIRIE!%n%n");
         System.out.printf("It may only be an abandoned dorm room on the university's%n");
         System.out.printf("campus, but it works, and the internet speed is great!%n");
         System.out.printf("Most importantly - it is the origin of a tech product with%n");
@@ -94,7 +96,7 @@ public class GameDisplay {
 
     public static void displayGameOver(String message, GameSession session) {
         System.out.printf("%n╔══════════════════════════════════════╗%n");
-        System.out.printf("║            GAME OVER 💀               ║%n");
+        System.out.printf("║            GAME OVER 💀              ║%n");
         System.out.printf("╚══════════════════════════════════════╝%n");
         System.out.printf("%s%n", message);
         System.out.printf("Days elapsed: %d%n", session.getDaysElapsed());
@@ -130,11 +132,12 @@ public class GameDisplay {
     }
 
     public static int getPlayerChoice(int min, int max) {
-        Scanner scanner = new Scanner(System.in);
         int choice = -1;
         while (choice < min || choice > max) {
             try {
-                choice = Integer.parseInt(scanner.nextLine().trim());
+                String line = scanner.nextLine().trim();
+                if (line.isEmpty()) continue;  // ← add this
+                choice = Integer.parseInt(line);
                 if (choice < min || choice > max) {
                     System.out.printf("Please enter a number between %d and %d: ", min, max);
                 }
@@ -146,7 +149,6 @@ public class GameDisplay {
     }
 
     public static String getValidatedName(String prompt, int maxLength) {
-        Scanner scanner = new Scanner(System.in);
         String input = "";
         while (input.trim().isEmpty()) {
             System.out.printf("%s: ", prompt);
@@ -163,11 +165,11 @@ public class GameDisplay {
 
     public static String getPlayerName(String prompt) {
         System.out.printf("%s: ", prompt);
-        return new Scanner(System.in).nextLine().trim();
+        return scanner.nextLine().trim();
     }
 
     public static void waitForEnter() {
         System.out.printf("%nPress ENTER to continue...%n");
-        new Scanner(System.in).nextLine();
+        scanner.nextLine();
     }
 }

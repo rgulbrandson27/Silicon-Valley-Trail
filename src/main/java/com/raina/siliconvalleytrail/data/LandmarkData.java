@@ -82,7 +82,7 @@ public class LandmarkData {
                         "is either deeply inspiring or deeply terrifying. Sometimes both.",
                 LandmarkType.NATURAL_LANDMARK,
                 Region.ROCKIES,
-                75, false, 20, 20,
+                75, false, 20, 10,
                 38.8409, -105.0422,
                 1140,
                 List.of("Colorado River Crossing")
@@ -117,7 +117,7 @@ public class LandmarkData {
                         "Get your startup's legal house in order before the pitch.",
                 LandmarkType.UNIVERSITY,
                 Region.WEST_COAST,
-                230, true, 15, 10,
+                230, true, 15, 5,
                 37.3496, -121.9390,
                 20,
                 List.of("Pacific Beach", "LinkedIn HQ")
@@ -129,7 +129,7 @@ public class LandmarkData {
                         "Some things matter more than metrics.",
                 LandmarkType.NATURAL_LANDMARK,
                 Region.WEST_COAST,
-                20, false, 15, 20,
+                20, false, 15, 10,
                 37.7609, -122.5107,
                 25,
                 List.of("Stanford GSB")
@@ -153,7 +153,7 @@ public class LandmarkData {
                         "A meeting here could change everything.",
                 LandmarkType.UNIVERSITY,
                 Region.WEST_COAST,
-                15, false, 25, 20,
+                15, false, 25, 5,
                 37.4275, -122.1697,
                 15,
                 List.of("Philz Coffee")
@@ -165,7 +165,7 @@ public class LandmarkData {
                         "The team's last refuel before the biggest pitch of their lives.",
                 LandmarkType.COFFEE_SHOP,
                 Region.WEST_COAST,
-                10, false, 10, 15,
+                10, false, 10, 10,
                 37.7749, -122.4194,
                 2,
                 List.of("San Francisco")

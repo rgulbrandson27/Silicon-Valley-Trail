@@ -48,7 +48,7 @@ public class RandomEventService {
         System.out.println("   Followers +300 | Inspiration +10");
         session.setFollowers(session.getFollowers() + 300);
         session.setInspiration(Math.min(
-                session.getInspiration() + 10,
+                session.getInspiration() + 5,
                 GameConstants.MAX_INSPIRATION));
     }
 
@@ -73,7 +73,7 @@ public class RandomEventService {
         System.out.println("   A tiny gas station had the best espresso anyone had ever tasted.");
         System.out.println("   Inspiration +15 | Rations +1");
         session.setInspiration(Math.min(
-                session.getInspiration() + 15,
+                session.getInspiration() + 5,
                 GameConstants.MAX_INSPIRATION));
         session.setRations(session.getRations() + 1);
     }
