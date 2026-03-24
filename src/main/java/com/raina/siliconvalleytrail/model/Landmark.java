@@ -35,7 +35,8 @@ public class Landmark {
     public Region getRegion() { return region; }
     public int getDistanceFromPrevious() { return distanceFromPrevious; }
     public boolean isForkPoint() { return isForkPoint; }
-    public int getFollowerGain() { return followerGain; }
+    public int
+    getFollowerGain() { return followerGain; }
     public int getInspirationGain() { return inspirationGain; }
     public List<String> getNextLandmarkNames() { return nextLandmarkNames; }
 }

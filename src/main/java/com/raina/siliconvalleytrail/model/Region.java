@@ -1,9 +1,6 @@
 package com.raina.siliconvalleytrail.model;
 
 public enum Region {
-    package com.raina.siliconvalleytrail.model;
-
-    public enum Region {
 
         GREAT_PLAINS(1.0, "Great Plains"),
         ROCKIES(1.25, "The Rockies"),
@@ -20,5 +17,5 @@ public enum Region {
 
         public double getCostMultiplier() { return costMultiplier; }
         public String getDisplayName() { return displayName; }
-    }
+
 }

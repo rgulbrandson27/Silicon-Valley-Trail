@@ -1,8 +1,12 @@
 package com.raina.siliconvalleytrail.service;
 
+import com.raina.siliconvalleytrail.model.GameSession;
+import com.raina.siliconvalleytrail.util.GameConstants;
+import com.raina.siliconvalleytrail.util.GameDisplay;
+
 public class GameService {
 
-    // master losing condition checker - call this every day/turn
+    // call this every turn after actions resolve
     public boolean checkLosingConditions(GameSession session) {
 
         if (isOutOfMoney(session)) {
@@ -16,63 +20,55 @@ public class GameService {
             return true;
         }
 
-        if (isOutOfEnergy(session)) {
-            displayLoss(session, "The team ran out of energy. " +
-                    "No protein bars, no coffee, no fuel. " +
-                    "Everyone went home.");
+        if (isOutOfRations(session)) {
+            displayLoss(session, "The team ran out of food and coffee. " +
+                    "No fuel left to keep going. Everyone went home.");
             return true;
         }
 
-        if (hasInspirationStreak(session, GameConstants.INSPIRATION_STREAK_LIMIT)) {
+        if (hasInspirationStreak(session)) {
             if (session.getInspiration() < GameConstants.MIN_INSPIRATION) {
                 displayLoss(session, "The team lost all motivation. " +
-                        "3 days of rock bottom morale ended the journey.");
+                        "Too many days of rock bottom inspiration ended the journey.");
             } else {
                 displayLoss(session, "The team burned out completely. " +
-                        "3 days of manic energy crashed everything.");
+                        "Too many days of manic energy crashed everything.");
             }
             return true;
         }
 
-        return false;  // no losing condition triggered
+        return false;
     }
 
-    // ─── individual losing condition checks ───────────────────────
+    // win condition — call after arriving at San Francisco
+    public boolean checkWinCondition(GameSession session) {
+        return session.hasArrived();
+    }
 
+    // individual losing condition checks
     private boolean isOutOfMoney(GameSession session) {
         return session.getCash() <= 0;
     }
 
     private boolean isTooLate(GameSession session) {
-        return session.getDaysRemaining() <= 0
-                && !session.getCurrentStop().equals("SanFrancisco");
+        return session.getDaysRemaining() <= 0 && !session.hasArrived();
     }
 
-    private boolean isOutOfEnergy(GameSession session) {
-        return checkStreakCondition(session.getEnergyStreak(),
-                GameConstants.ENERGY_STREAK_LIMIT);
+    private boolean isOutOfRations(GameSession session) {
+        return session.getRations() <= 0;
     }
 
-    private boolean hasInspirationStreak(GameSession session, int streakLimit) {
-        return checkStreakCondition(session.getLowInspirationStreak(), streakLimit)
-                || checkStreakCondition(session.getHighInspirationStreak(), streakLimit);
+    private boolean hasInspirationStreak(GameSession session) {
+        return session.getLowInspirationStreak() >= GameConstants.INSPIRATION_STREAK_LIMIT
+                || session.getHighInspirationStreak() >= GameConstants.INSPIRATION_STREAK_LIMIT;
     }
 
-
-
-
-
-    // ─── your reusable day counter ────────────────────────────────
-    // streakLimit is configurable - pass 1 for immediate, 3 for gradual
-
-    private boolean checkStreakCondition(int currentStreak, int streakLimit) {
-        return currentStreak >= streakLimit;
+    // danger zone tracker — call when cash drops low
+    public void checkDangerZone(GameSession session) {
+        if (session.getCash() < GameConstants.DANGER_ZONE_CASH_THRESHOLD) {
+            session.incrementDangerZoneCount();
+        }
     }
-
-
-
-
-    // ─── helper ───────────────────────────────────────────────────
 
     private void displayLoss(GameSession session, String message) {
         session.setGameOver(true);

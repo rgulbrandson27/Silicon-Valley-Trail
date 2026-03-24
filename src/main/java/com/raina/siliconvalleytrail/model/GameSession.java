@@ -9,6 +9,9 @@ import java.util.UUID;
 public class GameSession {
 
     private String sessionId;
+    private String sessionName;
+
+
 
     private String founderName;
     private String engineer1Name;
@@ -49,10 +52,11 @@ public class GameSession {
     private int highInspirationStreak;  // days above 80
 
     // constructor
-    public GameSession(String founderName, String engineer1Name, String engineer2Name,
+    public GameSession(String sessionName, String founderName, String engineer1Name, String engineer2Name,
                        String engineer3Name, DepartureDate departureDate,
                        int totalDays, int startingCash) {
         this.sessionId = UUID.randomUUID().toString();
+        this.sessionName = null;
         this.founderName = founderName;
         this.engineer1Name = engineer1Name;
         this.engineer2Name = engineer2Name;
@@ -87,6 +91,9 @@ public class GameSession {
 
     // identity
     public String getSessionId() { return sessionId; }
+
+    public String getSessionName() { return sessionName; }
+    public void setSessionName(String sessionName) { this.sessionName = sessionName; }
 
     public String getFounderName() { return founderName; }
     public void setFounderName(String founderName) { this.founderName = founderName; }

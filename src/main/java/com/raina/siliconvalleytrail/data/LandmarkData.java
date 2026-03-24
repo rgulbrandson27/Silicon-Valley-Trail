@@ -30,13 +30,16 @@ public class LandmarkData {
                 "Ole's Big Game Steakhouse",
                 "Nebraska's most legendary roadside stop in Paxton. " +
                         "Upon entering, you are greeted by a life-size polar bear. " +
-                        "After a great meal, the team forges ahead.",
+                        "During the meal, your team is recognized by a former student." +
+//                        ""Are you that group who made that prank video?"" +
+                        "He asks for a picture with your team." +
+                        "He then posts to his own social media along with the original video.",
                 LandmarkType.RESTAURANT,
                 Region.GREAT_PLAINS,
                 287,
                 true,   // FORK POINT #1 — Chimney Rock or Sidney
-                5,
-                10,
+                75,
+                15,
                 List.of("Chimney Rock", "Sidney")
         ));
 
