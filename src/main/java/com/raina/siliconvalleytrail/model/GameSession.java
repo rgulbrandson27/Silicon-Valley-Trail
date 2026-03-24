@@ -5,7 +5,9 @@ import com.raina.siliconvalleytrail.util.GameConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GameSession {
 
     private String sessionId;
@@ -53,12 +55,15 @@ public class GameSession {
     private int lowInspirationStreak;   // days below 20
     private int highInspirationStreak;  // days above 80
 
+    // required for Jackson deserialization
+    public GameSession() {}
+
     // constructor
     public GameSession(String sessionName, String founderName, String engineer1Name, String engineer2Name,
                        String engineer3Name, DepartureDate departureDate,
                        int totalDays, int startingCash) {
         this.sessionId = UUID.randomUUID().toString();
-        this.sessionName = null;
+        this.sessionName = sessionName;
         this.founderName = founderName;
         this.engineer1Name = engineer1Name;
         this.engineer2Name = engineer2Name;

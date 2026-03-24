@@ -133,7 +133,7 @@ public class ScoringService {
     private void displayCompetitionResult(GameSession session, int total) {
         System.out.println("\n╔══════════════════════════════════════╗");
         System.out.println("║      STARTUP WORLD CUP RESULTS       ║");
-        System.out.println("║     November 18, 2026 — San Francisco ║");
+        System.out.println("║    November 18, 2026 — San Francisco ║");
         System.out.println("╚══════════════════════════════════════╝");
         System.out.println();
 

@@ -12,7 +12,7 @@ public class GameConstants {
     public static final int MAX_INSPIRATION = 100;
     public static final int MIN_INSPIRATION = 0;
     public static final int LOW_INSPIRATION_THRESHOLD = 20;
-    public static final int HIGH_INSPIRATION_THRESHOLD = 80;
+    public static final int HIGH_INSPIRATION_THRESHOLD = 90;
     public static final int INSPIRATION_STREAK_LIMIT = 2;
 
     public static final int DEFAULT_ROUTE_MILES = 1615;

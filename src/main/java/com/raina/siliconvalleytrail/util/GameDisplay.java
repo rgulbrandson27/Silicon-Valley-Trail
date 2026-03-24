@@ -8,41 +8,57 @@ public class GameDisplay {
     public static void displayWelcomeMessage() {
         System.out.printf("╔══════════════════════════════════════╗%n");
         System.out.printf("║        SILICON VALLEY TRAIL  🚗      ║%n");
-        System.out.printf("║  Can your startup survive the ride?  ║%n");
+        System.out.printf("║       San Francisco or Bust!         ║%n");
         System.out.printf("╚══════════════════════════════════════╝%n");
-        waitForEnter();
     }
 
     public static void displayGameSummary() {
-        System.out.printf("YOUR MISSION:%n");
-        System.out.printf("─────────────────────────────────────%n");
+        System.out.printf("           YOUR MISSION:%n");
+        System.out.printf("──────────────────────────────────────────%n");
         System.out.printf("You are the founder of a scrappy startup team%n");
-        System.out.printf("Your goal: Take 1st prize and win a million dollars%n");
-        System.out.printf("at the Startup World Cup Grand Finale%n");
-        System.out.printf("in San Francisco, November 18-20, 2026%n");
-        waitForEnter();
+        System.out.printf("with a discreet make-shift office%n");
+        System.out.printf("in the SILICON PRAIRIE!%n");
+        System.out.printf("It may only be an abandoned dorm room on the university's%n");
+        System.out.printf("campus, but it works, and the internet speed is great!%n");
+        System.out.printf("Most importantly - it is the origin of a tech product with%n");
+        System.out.printf("the potential to change history.%n");
+
+        System.out.printf("Just one problem...you need startup $$$. %n");
+        System.out.printf("The only thing getting in the way of%n");
+        System.out.printf("this product launch is halfway across the country.%n");
+
+        System.out.println("╔══════════════════════════════════════════╗");
+        System.out.println("║       STARTUP WORLD CUP FINALE           ║");
+        System.out.println("║           San Francisco, CA              ║");
+        System.out.println("║          November 18–20, 2026            ║");
+        System.out.println("║                                          ║");
+        System.out.println("║           💰 GRAND PRIZE: 💰             ║");
+        System.out.println("║          ONE MILLION DOLLARS!            ║");
+        System.out.println("╚══════════════════════════════════════════╝");
     }
 
     public static void displayInstructionsPage2() {
-        System.out.printf("YOUR STARTUP'S STATS:%n");
-        System.out.printf("RESOURCES─────────────STATUS───────────────────────%n");
-        System.out.printf("💰 Cash - $10,000.   ✨ Inspiration - 60/100%n");
-        System.out.printf("🤝 Connections - 2.  📈 Learning Curve - STEADY%n");
-        System.out.printf("📱 Social Media Followers - 450%n");
-        System.out.printf("🤖 AI Tokens - 50,000%n");
-        waitForEnter();
+        System.out.printf("Other than ingenuity, there is not much%n");
+        System.out.printf("to work with, but you do have the following:%n");
+        System.out.printf("RESOURCES──────────────%n");
+        System.out.printf("💰 Cash - $10,000.   %n");
+        System.out.printf("🤝 Connections - 2%n");
+        System.out.printf("📱 Social Media Followers - 450 (campus prank video)%n");
+        System.out.printf("🤖 AI Tokens - 250,000%n");
+        System.out.printf("STATUS───────────────────────%n");
+        System.out.printf("✨ Inspiration - 60/100%n");
+        System.out.printf("📈 Learning Curve - STEADY%n");
     }
 
     public static void displayInstructionsPage3() {
-        System.out.printf("TO REMAIN A COMPETITOR....%n");
+        System.out.printf("TO STAY IN THE COMPETITION....%n");
         System.out.printf("─────────────────────────────────────%n");
         System.out.printf("⚠️  Don't run out of cash!%n");
         System.out.printf("⚠️  Don't run out of rations!%n");
         System.out.printf("⚠️  Monitor your excitement and productivity levels%n");
-        System.out.printf("⚠️  Inspiration above 80%% for 2 days without pivot = team burnout%n");
+        System.out.printf("⚠️  Inspiration above 90%% for 2 days without pivot = team burnout%n");
         System.out.printf("⚠️  Inspiration below 20%% for 2 days without an uplift = no steam%n");
         System.out.printf("⚠️  And of course, DON'T BE LATE for the competition!%n");
-        waitForEnter();
     }
 
     public static void displayActionMenu() {
