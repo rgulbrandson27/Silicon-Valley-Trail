@@ -2,10 +2,7 @@ package com.raina.siliconvalleytrail;
 
 import com.raina.siliconvalleytrail.data.LandmarkData;
 import com.raina.siliconvalleytrail.model.*;
-import com.raina.siliconvalleytrail.service.DenverEvent;
-import com.raina.siliconvalleytrail.service.GameService;
-import com.raina.siliconvalleytrail.service.RenoEvent;
-import com.raina.siliconvalleytrail.service.RouteService;
+import com.raina.siliconvalleytrail.service.*;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 import com.raina.siliconvalleytrail.model.GameSession;
@@ -88,11 +85,20 @@ public class Main {
 
         // load landmarks
         Map<String, Landmark> landmarks = LandmarkData.getLandmarks();
+
         RouteService routeService = new RouteService();
         GameService gameService = new GameService();
+        StockApiService stockApi = new StockApiService();
+        RandomEventService randomEventService = new RandomEventService();
 
         System.out.printf("%nGood luck, %s! The Silicon Prairie believes in you.%n",
                 founderName);
+        GameDisplay.waitForEnter();
+
+        double koPrice1 = stockApi.getKoClosePrice();
+        session.setInitialKoPrice(koPrice1);
+        session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice1));
+        System.out.println(stockApi.getMarketMessage(koPrice1, session.getRationCostMultiplier()));
         GameDisplay.waitForEnter();
 
         // ── GAME LOOP ──────────────────────────────────────────────
@@ -126,7 +132,7 @@ public class Main {
                     routeService.travel(session, next);
                     session.setCurrentLandmark(chosenNext);
                     session.addLandmarkVisited(chosenNext);
-                    GameDisplay.displayArrival(next.getName(), next.getDescription());
+                    GameDisplay.displayArrival(next.getName(), next.getDescription(), next.getDistanceFromPrevious());
 
                     // apply landmark gains
                     session.setFollowers(session.getFollowers() + next.getFollowerGain());
@@ -134,8 +140,31 @@ public class Main {
                             session.getInspiration() + next.getInspirationGain(),
                             GameConstants.MAX_INSPIRATION));
                     // landmark specific events — fire on arrival
-                    if (chosenNext.equals("Denver")) new DenverEvent().execute(session);
                     if (chosenNext.equals("Reno"))   new RenoEvent().execute(session);
+                    // landmark specific events — fire on arrival
+                    if (chosenNext.equals("Pikes Peak")) {
+                        double koPrice2 = stockApi.getKoClosePrice();
+                        session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice2));
+
+                        // compare to initial price
+                        double change = koPrice2 - session.getInitialKoPrice();
+                        if (change > 0) {
+                            System.out.printf("📈 KO is up $%.4f since Lincoln. Market confidence growing.%n", change);
+                        } else if (change < 0) {
+                            System.out.printf("📉 KO is down $%.4f since Lincoln. Markets getting nervous.%n", Math.abs(change));
+                        } else {
+                            System.out.println("📊 KO hasn't moved since Lincoln. Markets holding steady.");
+                        }
+                        System.out.println(stockApi.getMarketMessage(koPrice2, session.getRationCostMultiplier()));
+                        GameDisplay.waitForEnter();
+                    }
+
+// Call 3 — market check at Santa Clara
+                    if (chosenNext.equals("Santa Clara School of Law")) {
+                        double koPrice3 = stockApi.getKoClosePrice();
+                        session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice3));
+                        System.out.println(stockApi.getMarketMessage(koPrice3, session.getRationCostMultiplier()));
+                    }
 
                     // check if arrived at San Francisco
                     if (chosenNext.equals("San Francisco")) {
@@ -181,6 +210,11 @@ public class Main {
                 }
             }
 
+            // random event
+            boolean eventFired = randomEventService.maybeFireEvent(session);
+            if (eventFired) {
+                GameDisplay.waitForEnter();
+            }
             // update inspiration streaks
             updateInspirationStreaks(session);
 
@@ -205,3 +239,4 @@ public class Main {
         }
     }
 }
+

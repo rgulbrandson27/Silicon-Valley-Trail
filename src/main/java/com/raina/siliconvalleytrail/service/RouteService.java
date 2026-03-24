@@ -10,11 +10,12 @@ public class RouteService {
         int travelCost = (int)(next.getDistanceFromPrevious() *
                 session.getCurrentRegion().getCostMultiplier());
         session.setCash(session.getCash() - travelCost);
-        session.setMilesRemaining(session.getMilesRemaining() - next.getDistanceFromPrevious());
+        session.setMilesRemaining(next.getMilesToSanFrancisco());
         session.setCurrentRegion(next.getRegion());
         session.setCurrentLandmark(next.getName());
         session.addLandmarkVisited(next.getName());
         session.setDaysElapsed(session.getDaysElapsed() + 1);
+        session.setRations(session.getRations() - 1);
     }
 
     // called when player chooses a detour

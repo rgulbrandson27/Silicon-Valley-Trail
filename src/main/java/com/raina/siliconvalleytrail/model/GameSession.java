@@ -11,8 +11,6 @@ public class GameSession {
     private String sessionId;
     private String sessionName;
 
-
-
     private String founderName;
     private String engineer1Name;
     private String engineer2Name;
@@ -24,6 +22,10 @@ public class GameSession {
     private int connections;
     private int followers;
     private int aiTokens;
+
+    //cola-cola costs
+    private double initialKoPrice;
+    private double rationCostMultiplier = 1.0;
 
     // team status
     private int inspiration;
@@ -138,6 +140,15 @@ public class GameSession {
 
     public int getDaysElapsed() { return daysElapsed; }
     public void setDaysElapsed(int daysElapsed) { this.daysElapsed = daysElapsed; }
+
+    //coca-cola costs
+    public double getInitialKoPrice() { return initialKoPrice; }
+    public void setInitialKoPrice(double initialKoPrice) { this.initialKoPrice = initialKoPrice; }
+
+    public double getRationCostMultiplier() { return rationCostMultiplier; }
+    public void setRationCostMultiplier(double rationCostMultiplier) {
+        this.rationCostMultiplier = rationCostMultiplier;
+    }
 
     // travel progress
     public String getCurrentLandmark() { return currentLandmark; }

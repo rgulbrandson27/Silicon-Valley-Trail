@@ -12,11 +12,17 @@ public class Landmark {
     private final boolean isForkPoint;
     private final int followerGain;
     private final int inspirationGain;
-    private final List<String> nextLandmarkNames;  // graph edges
+    private final double latitude;
+    private final double longitude;
+    private final int milesToSanFrancisco;
+    private final List<String> nextLandmarkNames;
 
     public Landmark(String name, String description, LandmarkType type,
                     Region region, int distanceFromPrevious, boolean isForkPoint,
-                    int followerGain, int inspirationGain, List<String> nextLandmarkNames) {
+                    int followerGain, int inspirationGain,
+                    double latitude, double longitude,
+                    int milesToSanFrancisco,
+                    List<String> nextLandmarkNames) {
         this.name = name;
         this.description = description;
         this.type = type;
@@ -25,6 +31,9 @@ public class Landmark {
         this.isForkPoint = isForkPoint;
         this.followerGain = followerGain;
         this.inspirationGain = inspirationGain;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.milesToSanFrancisco = milesToSanFrancisco;
         this.nextLandmarkNames = nextLandmarkNames;
     }
 
@@ -35,8 +44,10 @@ public class Landmark {
     public Region getRegion() { return region; }
     public int getDistanceFromPrevious() { return distanceFromPrevious; }
     public boolean isForkPoint() { return isForkPoint; }
-    public int
-    getFollowerGain() { return followerGain; }
+    public int getFollowerGain() { return followerGain; }
     public int getInspirationGain() { return inspirationGain; }
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
+    public int getMilesToSanFrancisco() { return milesToSanFrancisco; }
     public List<String> getNextLandmarkNames() { return nextLandmarkNames; }
 }

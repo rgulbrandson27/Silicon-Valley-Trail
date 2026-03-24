@@ -49,7 +49,7 @@ public class StockApiService {
             JsonNode json = objectMapper.readTree(response.body());
             JsonNode values = json.get("values");
 
-            if (values != null && values.isArray() && values.size() > 0) {
+            if (values != null && values.isArray() && !values.isEmpty()) {
                 String closeStr = values.get(0).get("close").asText();
                 return Double.parseDouble(closeStr);
             }
@@ -81,15 +81,15 @@ public class StockApiService {
     public String getMarketMessage(double koPrice, double multiplier) {
         if (multiplier < 1.0) {
             return String.format(
-                    "📈 KO is trading at $%.2f — market confidence is high. " +
+                    "📈 KO is trading at $%.24f — market confidence is high. " +
                             "Rations cost 10%% less today.", koPrice);
         } else if (multiplier > 1.0) {
             return String.format(
-                    "📉 KO is trading at $%.2f — markets are nervous. " +
+                    "📉 KO is trading at $%.4f — markets are nervous. " +
                             "Rations cost 20%% more today.", koPrice);
         } else {
             return String.format(
-                    "📊 KO is trading at $%.2f — markets are steady. " +
+                    "📊 KO is trading at $%.4f — markets are steady. " +
                             "Normal ration costs today.", koPrice);
         }
     }

@@ -36,11 +36,11 @@ public class GameDisplay {
         System.out.print("Enter choice (1-6): ");
     }
 
-    public static void displayArrival(String landmarkName, String description) {
+    public static void displayArrival(String landmarkName, String description, int milesTraveled) {
         System.out.printf("%n✅ Arrived at %s!%n", landmarkName);
+        System.out.printf("🚗 Miles traveled: %d%n", milesTraveled);
         System.out.printf("%s%n", description);
     }
-
     public static void displayForkChoice(String option1, String option2) {
         System.out.printf("%nYou face a fork in the road!%n");
         System.out.printf("─────────────────────────────────────%n");

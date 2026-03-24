@@ -15,7 +15,7 @@ public class GameConstants {
     public static final int MIN_INSPIRATION = 20;
     public static final int INSPIRATION_STREAK_LIMIT = 3;
 
-    public static final int DEFAULT_ROUTE_MILES = 1000;
+    public static final int DEFAULT_ROUTE_MILES = 1615;
     public static final int BASE_DAILY_COST = 200;                 // rename to INSPIRATION_STREAK_LIMIT
 
 }
