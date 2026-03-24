@@ -18,19 +18,18 @@ public class RandomEventService {
     public boolean maybeFireEvent(GameSession session) {
         if (random.nextInt(3) != 0) return false;
 
-        int eventIndex = random.nextInt(11);
+        int eventIndex = random.nextInt(10);
         switch (eventIndex) {
             case 0 -> flatTire(session);
             case 1 -> viralPost(session);
             case 2 -> teamConflictTabs(session);
-            case 3 -> unexpectedInvestor(session);
-            case 4 -> laptopDied(session);
-            case 5 -> goodCoffee(session);
-            case 6 -> musicConflict(session);
-            case 7 -> noInternet(session);
-            case 8 -> spoiledFood(session);
-            case 9 -> learningCurveEscalates(session);
-            case 10 -> forgotWallet(session);
+            case 3 -> laptopDied(session);
+            case 4 -> goodCoffee(session);
+            case 5 -> musicConflict(session);
+            case 6 -> noInternet(session);
+            case 7 -> spoiledFood(session);
+            case 8 -> learningCurveEscalates(session);
+            case 9 -> forgotWallet(session);
         }
         return true;
     }
@@ -59,14 +58,6 @@ public class RandomEventService {
         System.out.println("   Inspiration -15");
         session.setInspiration(Math.max(
                 session.getInspiration() - 15, 0));
-    }
-
-    private void unexpectedInvestor(GameSession session) {
-        System.out.println("\n💰 UNEXPECTED INVESTOR!");
-        System.out.println("   Someone at a rest stop recognized your pitch deck.");
-        System.out.println("   Cash +$2000 | Connections +1");
-        session.setCash(session.getCash() + 2000);
-        session.setConnections(session.getConnections() + 1);
     }
 
     private void laptopDied(GameSession session) {
@@ -99,10 +90,12 @@ public class RandomEventService {
 
     private void noInternet(GameSession session) {
         System.out.println("\n📡 NO INTERNET!");
-        System.out.println("   Dead zone. The team loses a day waiting for signal.");
-        System.out.println("   AI Tokens -2 | Days +1");
-        session.setAiTokens(Math.max(session.getAiTokens() - 2, 0));
+        System.out.println("   Dead zone. The team is stuck waiting for signal.");
+        System.out.println("   They check into a hotel and lose a full day.");
+        System.out.println("   Days +1 | Rations -1 | Cash -$400");
         session.setDaysElapsed(session.getDaysElapsed() + 1);
+        session.setRations(Math.max(session.getRations() - 1, 0));
+        session.setCash(session.getCash() - 400);
     }
 
     private void spoiledFood(GameSession session) {
@@ -138,9 +131,9 @@ public class RandomEventService {
     private void forgotWallet(GameSession session) {
         System.out.println("\n👛 SOMEONE LEFT THEIR WALLET AT THE GAS STATION!");
         System.out.println("   The team had to backtrack 25 miles each way.");
-        System.out.println("   Cash -$150 (extra gas) | Days +1");
-        session.setCash(session.getCash() - 150);
-        session.setDaysElapsed(session.getDaysElapsed() + 1);
-        session.setMilesRemaining(session.getMilesRemaining() + 50); // backtrack adds miles
+        System.out.println("   Cash -$50 | Inspiration -5");
+        session.setCash(session.getCash() - 50);
+        session.setInspiration(Math.max(session.getInspiration() - 5, 0));
+        session.setMilesRemaining(session.getMilesRemaining() + 50);
     }
 }

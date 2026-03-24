@@ -1,10 +1,9 @@
 package com.raina.siliconvalleytrail.model;
 
-import com.raina.siliconvalleytrail.model.GameSession;
+public abstract class AnchoredEvent {
 
-public abstract class LandmarkEvent {
-
-    // every landmark event must implement this
+    // AnchoredEvent — abstract superclass for events tied to a specific landmark
+    // Example subclasses: DenverEvent, RenoEvent
     public abstract void execute(GameSession session);
 
     // shared utility for randomness

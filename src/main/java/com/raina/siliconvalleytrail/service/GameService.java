@@ -27,7 +27,7 @@ public class GameService {
         }
 
         if (hasInspirationStreak(session)) {
-            if (session.getInspiration() < GameConstants.MIN_INSPIRATION) {
+            if (session.getInspiration() < GameConstants.LOW_INSPIRATION_THRESHOLD) {
                 displayLoss(session, "The team lost all motivation. " +
                         "Too many days of rock bottom inspiration ended the journey.");
             } else {
@@ -58,9 +58,10 @@ public class GameService {
         return session.getRations() <= 0;
     }
 
+    // streak triggers on day 3 — they get 2 days to fix it
     private boolean hasInspirationStreak(GameSession session) {
-        return session.getLowInspirationStreak() >= GameConstants.INSPIRATION_STREAK_LIMIT
-                || session.getHighInspirationStreak() >= GameConstants.INSPIRATION_STREAK_LIMIT;
+        return session.getLowInspirationStreak() > GameConstants.INSPIRATION_STREAK_LIMIT
+                || session.getHighInspirationStreak() > GameConstants.INSPIRATION_STREAK_LIMIT;
     }
 
     // danger zone tracker — call when cash drops low

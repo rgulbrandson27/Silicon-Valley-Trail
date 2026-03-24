@@ -1,13 +1,13 @@
 package com.raina.siliconvalleytrail.util;
-import com.raina.siliconvalleytrail.model.GameSession;
 
+import com.raina.siliconvalleytrail.model.GameSession;
 import java.util.Scanner;
 
 public class GameDisplay {
 
     public static void displayWelcomeMessage() {
         System.out.printf("╔══════════════════════════════════════╗%n");
-        System.out.printf("║        SILICON VALLEY TRAIL  🚀      ║%n");
+        System.out.printf("║        SILICON VALLEY TRAIL  🚗      ║%n");
         System.out.printf("║  Can your startup survive the ride?  ║%n");
         System.out.printf("╚══════════════════════════════════════╝%n");
         waitForEnter();
@@ -16,10 +16,32 @@ public class GameDisplay {
     public static void displayGameSummary() {
         System.out.printf("YOUR MISSION:%n");
         System.out.printf("─────────────────────────────────────%n");
-        System.out.printf("You are a scrappy startup founder%n");
-        System.out.printf("heading west to compete in the%n");
-        System.out.printf("Startup World Cup Grand Finale%n");
-        System.out.printf("in San Francisco on November 18, 2026.%n");
+        System.out.printf("You are the founder of a scrappy startup team%n");
+        System.out.printf("Your goal: Take 1st prize and win a million dollars%n");
+        System.out.printf("at the Startup World Cup Grand Finale%n");
+        System.out.printf("in San Francisco, November 18-20, 2026%n");
+        waitForEnter();
+    }
+
+    public static void displayInstructionsPage2() {
+        System.out.printf("YOUR STARTUP'S STATS:%n");
+        System.out.printf("RESOURCES─────────────STATUS───────────────────────%n");
+        System.out.printf("💰 Cash - $10,000.   ✨ Inspiration - 60/100%n");
+        System.out.printf("🤝 Connections - 2.  📈 Learning Curve - STEADY%n");
+        System.out.printf("📱 Social Media Followers - 450%n");
+        System.out.printf("🤖 AI Tokens - 50,000%n");
+        waitForEnter();
+    }
+
+    public static void displayInstructionsPage3() {
+        System.out.printf("TO REMAIN A COMPETITOR....%n");
+        System.out.printf("─────────────────────────────────────%n");
+        System.out.printf("⚠️  Don't run out of cash!%n");
+        System.out.printf("⚠️  Don't run out of rations!%n");
+        System.out.printf("⚠️  Monitor your excitement and productivity levels%n");
+        System.out.printf("⚠️  Inspiration above 80%% for 2 days without pivot = team burnout%n");
+        System.out.printf("⚠️  Inspiration below 20%% for 2 days without an uplift = no steam%n");
+        System.out.printf("⚠️  And of course, DON'T BE LATE for the competition!%n");
         waitForEnter();
     }
 
@@ -38,11 +60,15 @@ public class GameDisplay {
 
     public static void displayArrival(String landmarkName, String description, int milesTraveled) {
         System.out.printf("%n✅ Arrived at %s!%n", landmarkName);
-        System.out.printf("🚗 Miles traveled: %d%n", milesTraveled);
+        System.out.printf("🚗 Miles traveled this leg: %d%n", milesTraveled);
         System.out.printf("%s%n", description);
     }
+
     public static void displayForkChoice(String option1, String option2) {
-        System.out.printf("%nYou face a fork in the road!%n");
+        System.out.printf("%nTime to make a decision!%n");
+        System.out.printf("%nKeep heading to Denver and stop by Cabela's in Sidney, NE%n");
+        System.out.printf("   OR%n");
+        System.out.printf("Deepen their Nebraskan roots with a detour to Chimney Rock%n");
         System.out.printf("─────────────────────────────────────%n");
         System.out.printf("1. %s%n", option1);
         System.out.printf("2. %s%n", option2);
@@ -70,6 +96,23 @@ public class GameDisplay {
         System.out.printf("Followers: %,d%n", session.getFollowers());
     }
 
+    public static void displayStatus(GameSession session) {
+        System.out.printf("%n─────────────────────────────────────%n");
+        System.out.printf("Day %d | %s | Days remaining: %d%n",
+                session.getDaysElapsed(),
+                session.getCurrentLandmark(),
+                session.getDaysRemaining());
+        System.out.printf("─────────────────────────────────────%n");
+        System.out.printf("💰 Cash:        $%,d%n", session.getCash());
+        System.out.printf("🎒 Rations:     %d days%n", session.getRations());
+        System.out.printf("🔗 Connections: %d%n", session.getConnections());
+        System.out.printf("📱 Followers:   %,d%n", session.getFollowers());
+        System.out.printf("🤖 AI Tokens:   %,d%n", session.getAiTokens());
+        System.out.printf("✨ Inspiration: %d/100%n", session.getInspiration());
+        System.out.printf("🗺️  Miles left:  %d%n", session.getMilesRemaining());
+        System.out.printf("─────────────────────────────────────%n");
+    }
+
     public static int getPlayerChoice(int min, int max) {
         Scanner scanner = new Scanner(System.in);
         int choice = -1;
@@ -84,43 +127,6 @@ public class GameDisplay {
             }
         }
         return choice;
-    }
-
-    public static void displayInstructionsPage2() {
-        System.out.printf("YOUR RESOURCES:%n");
-        System.out.printf("─────────────────────────────────────%n");
-        System.out.printf("💰 Cash       - your runway%n");
-        System.out.printf("🤝 Connections - open doors%n");
-        System.out.printf("📱 Followers  - social clout%n");
-        System.out.printf("✨ Inspiration - team morale%n");
-        waitForEnter();
-    }
-
-    public static void displayInstructionsPage3() {
-        System.out.printf("WATCH OUT:%n");
-        System.out.printf("─────────────────────────────────────%n");
-        System.out.printf("⚠️  Run out of cash = game over%n");
-        System.out.printf("⚠️  Inspiration below 20 for 3 days = burnout%n");
-        System.out.printf("⚠️  Inspiration above 80 for 3 days = burnout%n");
-        System.out.printf("⚠️  Miss the deadline = game over%n");
-        waitForEnter();
-    }
-
-    public static void displayStatus(GameSession session) {
-        System.out.printf("%n─────────────────────────────────────%n");
-        System.out.printf("Day %d | %s | Days remaining: %d%n",
-                session.getDaysElapsed(),
-                session.getCurrentLandmark(),
-                session.getDaysRemaining());
-        System.out.printf("─────────────────────────────────────%n");
-        System.out.printf("💰 Cash:        $%,d%n", session.getCash());
-        System.out.printf("🎒 Rations:     %d days%n", session.getRations());
-        System.out.printf("🔗 Connections: %d%n", session.getConnections());
-        System.out.printf("📱 Followers:   %,d%n", session.getFollowers());
-        System.out.printf("🤖 AI Tokens:   %d%n", session.getAiTokens());
-        System.out.printf("✨ Inspiration: %d%n", session.getInspiration());
-        System.out.printf("🗺️  Miles left:  %d%n", session.getMilesRemaining());
-        System.out.printf("─────────────────────────────────────%n");
     }
 
     public static String getValidatedName(String prompt, int maxLength) {

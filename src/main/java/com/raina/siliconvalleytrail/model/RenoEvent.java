@@ -1,11 +1,10 @@
-package com.raina.siliconvalleytrail.service;
+package com.raina.siliconvalleytrail.model;
 
-import com.raina.siliconvalleytrail.model.GameSession;
-import com.raina.siliconvalleytrail.model.LandmarkEvent;
+import com.raina.siliconvalleytrail.service.CardApiService;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 
-public class RenoEvent extends LandmarkEvent {
+public class RenoEvent extends AnchoredEvent {
 
     private final CardApiService cardApiService;
 

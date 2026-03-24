@@ -1,11 +1,11 @@
 package com.raina.siliconvalleytrail.service;
 
-import com.raina.siliconvalleytrail.model.LandmarkEvent;
+import com.raina.siliconvalleytrail.model.AnchoredEvent;
 import com.raina.siliconvalleytrail.model.GameSession;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 
-public class DenverEvent extends LandmarkEvent {
+public class DenverEvent extends AnchoredEvent {
 
     @Override
     public void execute(GameSession session) {

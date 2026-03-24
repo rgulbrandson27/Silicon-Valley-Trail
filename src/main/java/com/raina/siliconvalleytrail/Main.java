@@ -3,6 +3,7 @@ package com.raina.siliconvalleytrail;
 import com.raina.siliconvalleytrail.data.LandmarkData;
 import com.raina.siliconvalleytrail.model.*;
 import com.raina.siliconvalleytrail.service.*;
+import com.raina.siliconvalleytrail.model.PikesPeakEvent;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 import com.raina.siliconvalleytrail.model.GameSession;
@@ -122,7 +123,6 @@ public class Main {
                     if (nextOptions.size() == 1) {
                         chosenNext = nextOptions.get(0);
                     } else {
-                        // fork point — present choice
                         GameDisplay.displayForkChoice(nextOptions.get(0), nextOptions.get(1));
                         int forkChoice = GameDisplay.getPlayerChoice(1, 2);
                         chosenNext = nextOptions.get(forkChoice - 1);
@@ -139,19 +139,20 @@ public class Main {
                     session.setInspiration(Math.min(
                             session.getInspiration() + next.getInspirationGain(),
                             GameConstants.MAX_INSPIRATION));
-                    // landmark specific events — fire on arrival
-                    if (chosenNext.equals("Reno"))   new RenoEvent().execute(session);
-                    // landmark specific events — fire on arrival
+
+                    // landmark specific events
+                    if (chosenNext.equals("Denver"))    new DenverEvent().execute(session);
+                    if (chosenNext.equals("Reno"))      new RenoEvent().execute(session);
+
                     if (chosenNext.equals("Pikes Peak")) {
+                        new PikesPeakEvent().execute(session);
                         double koPrice2 = stockApi.getKoClosePrice();
                         session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice2));
-
-                        // compare to initial price
                         double change = koPrice2 - session.getInitialKoPrice();
                         if (change > 0) {
-                            System.out.printf("📈 KO is up $%.4f since Lincoln. Market confidence growing.%n", change);
+                            System.out.printf("📈 KO is up $%.4f since Lincoln.%n", change);
                         } else if (change < 0) {
-                            System.out.printf("📉 KO is down $%.4f since Lincoln. Markets getting nervous.%n", Math.abs(change));
+                            System.out.printf("📉 KO is down $%.4f since Lincoln.%n", Math.abs(change));
                         } else {
                             System.out.println("📊 KO hasn't moved since Lincoln. Markets holding steady.");
                         }
@@ -159,17 +160,18 @@ public class Main {
                         GameDisplay.waitForEnter();
                     }
 
-// Call 3 — market check at Santa Clara
                     if (chosenNext.equals("Santa Clara School of Law")) {
                         double koPrice3 = stockApi.getKoClosePrice();
                         session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice3));
                         System.out.println(stockApi.getMarketMessage(koPrice3, session.getRationCostMultiplier()));
+                        GameDisplay.waitForEnter();
                     }
 
-                    // check if arrived at San Francisco
                     if (chosenNext.equals("San Francisco")) {
                         session.setHasArrived(true);
                         GameDisplay.displayVictory(session);
+                        new ScoringService().calculateFinalScore(session);
+                        GameDisplay.waitForEnter();
                     }
                 }
 
@@ -227,10 +229,10 @@ public class Main {
     private static void updateInspirationStreaks(GameSession session) {
         int inspiration = session.getInspiration();
 
-        if (inspiration < GameConstants.MIN_INSPIRATION) {
+        if (inspiration < GameConstants.LOW_INSPIRATION_THRESHOLD) {
             session.setLowInspirationStreak(session.getLowInspirationStreak() + 1);
             session.setHighInspirationStreak(0);
-        } else if (inspiration > GameConstants.MAX_INSPIRATION) {
+        } else if (inspiration > GameConstants.HIGH_INSPIRATION_THRESHOLD) {
             session.setHighInspirationStreak(session.getHighInspirationStreak() + 1);
             session.setLowInspirationStreak(0);
         } else {

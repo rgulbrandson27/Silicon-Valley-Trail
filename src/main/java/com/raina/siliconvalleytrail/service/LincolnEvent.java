@@ -1,5 +1,7 @@
 package com.raina.siliconvalleytrail.service;
 
-public class LincolnEvent {
+import com.raina.siliconvalleytrail.model.AnchoredEvent;
+
+public class LincolnEvent extends AnchoredEvent {
 
 }

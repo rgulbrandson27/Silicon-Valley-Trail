@@ -85,12 +85,12 @@ public class LandmarkData {
                 75, false, 20, 20,
                 38.8409, -105.0422,
                 1140,
-                List.of("Mystery Stop")
+                List.of("Colorado River Crossing")
         ));
 
-        landmarks.put("Mystery Stop", new Landmark(
-                "Mystery Stop",
-                "To be determined. Something extraordinary awaits.",
+        landmarks.put("Colorado River Crossing", new Landmark(
+                "Colorado River Crossing",
+                "Enjoy the beauty.",
                 LandmarkType.NATURAL_LANDMARK,
                 Region.SOUTHWEST,
                 300, false, 0, 0,
