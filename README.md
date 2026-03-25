@@ -1,13 +1,5 @@
-# silicon-valley-trail
-LinkedIn take-home project.  Build a modern day version of "Oregon Trail."  
-#  Silicon Valley Trail
-### A REACH Take-Home Assessment Project
-
-> *"Oregon Trail" meets Silicon Valley startup culture. Guide your scrappy startup team from the Silicon Prairie to San Francisco — before November 18th.*
-
----
 # 🏞️ Silicon Valley Trail
-### A REACH Take-Home Assessment Project — LinkedIn Backend Engineering Apprenticeship 2026
+### A REACH Apprenticeship Take-Home Assessment Project
 
 > *From the Silicon Prairie to Silicon Valley. Guide your scrappy startup team from Lincoln, Nebraska to the Startup World Cup Grand Finale in San Francisco — before November 18th.*
 
@@ -37,23 +29,11 @@ mvn compile
 mvn exec:java -Dexec.mainClass="com.raina.siliconvalleytrail.Main"
 ```
 
-### Run with Mock Data (no API key required)
-```bash
-# The game runs automatically with mock data if no API key is set
-# Just run normally — fallback is built in
-mvn exec:java -Dexec.mainClass="com.raina.siliconvalleytrail.Main"
-```
 
-### Run Tests
-```bash
-mvn test
-```
 
----
+### API Keys
 
-## How to Set API Keys
-
-This game uses the **Twelve Data API** to pull live KO (Coca-Cola) stock prices as a market confidence indicator. No credit card required — sign up at [twelvedata.com](https://twelvedata.com) for a free API key.
+**Twelve Data** (KO stock price) requires a free API key — no credit card needed. Sign up at [twelvedata.com](https://twelvedata.com).
 
 1. Copy the example env file:
 ```bash
@@ -67,9 +47,9 @@ TWELVE_DATA_API_KEY=your_key_here
 
 3. Point IntelliJ at the `.env` file via **Run → Edit Configurations → Environment Variables**
 
-4. If no key is provided, the game falls back to mock data automatically. **No secrets are required to play.**
+If no key is provided, the game falls back to mock data automatically — **no key is required to play**.
 
-The **Deck of Cards API** (used at Reno) and the **OSRM routing API** (used for driving distances) require no API keys at all.
+No API keys are required for the **Deck of Cards API** (Reno casino) or **OSRM routing API** (driving distances).
 
 ---
 
@@ -79,42 +59,31 @@ The **Deck of Cards API** (used at Reno) and the **OSRM routing API** (used for 
 - **Founder** — you
 - **Engineer 1, 2, 3** — your scrappy crew
 
-Name your save, name your team, pick your departure date. The journey begins.
+Name your game session, team members, and select a strategic departure date.
 
-### Resources to Manage
+### Resources
 
-| Resource | Description |
-|----------|-------------|
-| 💰 Cash | Your runway — don't run out |
-| 🎒 Rations | Days of food and coffee — replenish or game over |
-| 🔗 Connections | People who open doors for you |
-| 📱 Followers | Your startup's social media presence |
-| 🤖 AI Tokens | Technical firepower |
+| Resource | Starting Value | Description                                 |
+|----------|---------------|---------------------------------------------|
+| 💰 Cash | $10,000 | Your runway — don't run out                 |
+| 🎒 Rations | Scales with departure date | Food and coffee for the road                |
+| 🤝 Connections | 2 | People who open doors for you               |
+| 📱 Followers | 450 | Campus prank video led to social media fame |
+| 🪙 AI Tokens | 250,000 | Technical firepower                         |
 
 ### Team Status
 
-| Status | Description |
-|--------|-------------|
-| ✨ Inspiration | Must stay between 20–80 or streaks trigger consequences (0–100 range) |
-| 📈 Learning Curve | STEADY / HIGH / STEEP — escalates through random events, affects AI token costs |
+| Status | Starting Value | Description                                |
+|--------|---------------|--------------------------------------------|
+| ✨ Inspiration | 60 / 100 | Keep it between 20–90 or face consequences |
+| 📈 Learning Curve | STEADY | Escalates through random events            |
 
-### The Deadline
-You must reach San Francisco **by November 18th** for the Startup World Cup Grand Finale. Choose your departure date wisely:
-
-| Departure Date | Days Available | Difficulty |
-|----------------|---------------|------------|
-| October 28 | 21 days | Easy |
-| November 1 | 17 days | Moderate |
-| November 5 | 13 days | Hard |
-| November 10 | 8 days | Brutal |
-
-Starting rations scale with departure date (`totalDays / 2`), so later departures compound the pressure.
 
 ### Losing Conditions
 - Cash hits zero
 - Rations run out
 - Inspiration stays below 20 for 2 days → team loses steam
-- Inspiration stays above 80 for 2 days → team burns out
+- Inspiration stays above 90 for 2 days → team hits burnout
 - Fail to reach San Francisco by November 18th
 
 ### Winning
@@ -148,8 +117,6 @@ Travel costs increase by region as you head west:
 | Rockies | 1.25x |
 | Southwest | 1.4x |
 | West Coast | 1.75x |
-
-Miles remaining always reflects the real driving distance from your current landmark to San Francisco, sourced from the OSRM routing API.
 
 ---
 
@@ -274,7 +241,7 @@ Claude (Anthropic) was used extensively as a collaborative design and architectu
 
 Code was written by the developer with AI assistance for reviewing structure, catching inconsistencies, and generating boilerplate. The game design, route, landmark selection, event narratives, scoring system, and overall creative direction are original. AI helped implement decisions; the developer made them.
 
-README.md was written by AI, with assistance/edits from the developer.  
+README.md was written by AI, with assistance/edits from the developer.
 
 ---
 
