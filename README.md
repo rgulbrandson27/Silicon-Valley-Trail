@@ -1,150 +1,48 @@
-# 🏞️ Silicon Valley Trail
-### A REACH Apprenticeship Take-Home Assessment Project
+## 🏞️ Silicon Valley Trail
 
-> *From the Silicon Prairie to Silicon Valley. Guide your scrappy startup team from Lincoln, Nebraska to the Startup World Cup Grand Finale in San Francisco — before November 18th.*
+ **A CLI startup survival game inspired by "Oregon Trail"** 
 
+>Guide your startup team from Lincoln, Nebraska to the 🏆STARTUP WORLD CUP🏆 in San Francisco while managing resources, making strategic decisions, and surviving unpredictable events.  Game play is influenced by real-world data through public APIs.
 ---
-
-## Summary
-
-Silicon Valley Trail is a CLI-based game inspired by the classic Oregon Trail, set in the world of scrappy tech startups. You play as a founder leading a small team of engineers on a cross-country road trip from Lincoln, Nebraska to compete in the **Startup World Cup Grand Finale** at the Hilton Union Square in San Francisco on November 18, 2026 — a real competition with a real $1,000,000 first-place investment prize.
-
-Each day the team travels, consumes resources, encounters random events, and makes consequential choices. Three real-world public APIs influence gameplay: live KO (Coca-Cola) stock prices affect ration costs as a market confidence indicator, the Deck of Cards API powers a casino event in Reno, and the OSRM/OpenStreetMap routing API provides real driving distances between landmarks.
-
-> *Note: The dollar-and-cents resource math was designed to feel directionally correct rather than financially precise. Some resource costs and event impacts prioritize gameplay tension over accounting accuracy — a deliberate tradeoff given time constraints.*
-
----
-
-## Quick Start
-
-### Prerequisites
-- Java 17 (Amazon Corretto 17 recommended)
-- Maven 3.6+
-
-### Run the Game
-```bash
-git clone https://github.com/rgulbrandson27/silicon-valley-trail.git
-cd silicon-valley-trail
-mvn compile
-mvn exec:java -Dexec.mainClass="com.raina.siliconvalleytrail.Main"
-```
-
-
-
-### API Keys
-
-**Twelve Data** (KO stock price) requires a free API key — no credit card needed. Sign up at [twelvedata.com](https://twelvedata.com).
-
-1. Copy the example env file:
-```bash
-cp .env.example .env
-```
-
-2. Add your key to `.env`:
-```
-TWELVE_DATA_API_KEY=your_key_here
-```
-
-3. Point IntelliJ at the `.env` file via **Run → Edit Configurations → Environment Variables**
-
-If no key is provided, the game falls back to mock data automatically — **no key is required to play**.
-
-No API keys are required for the **Deck of Cards API** (Reno casino) or **OSRM routing API** (driving distances).
-
----
-
 ## Game Overview
 
-### Your Team
-- **Founder** — you
-- **Engineer 1, 2, 3** — your scrappy crew
+- Travel across 14 landmarks with branching paths
+- Travel costs increase as you move west
+- Choose a departure date and balance pace, business risks, and resources
 
-Name your game session, team members, and select a strategic departure date.
+### ⚙️ Features
+- **Game Loop** - Each day you encounter events and choose actions.
+- **Events** - Some events are landmark specific, while others are random.  Events can have a positive or negative impact on team resources.
+- **Branching Routes** - Forks in the road enhance user decision-making and game results.
+- **API Integration** 
+  - The team's energy source cost may change twice during the game due to live market rates.
+  - Deck of Cards API (Reno casino event).
+  - OSRM routing API affects miles traveled and miles remaining.
+- **Offline Play** - Automatic fall back to mock data.
+- **Win/Loss Conditions** 
+  - Resource Depletion
+  - Missed competition deadline
+  - Arrival to final destination triggers resource calculation and determines the teams final placement and winnings.
 
-### Resources
-
-| Resource | Starting Value | Description                                 |
-|----------|---------------|---------------------------------------------|
-| 💰 Cash | $10,000 | Your runway — don't run out                 |
-| 🎒 Rations | Scales with departure date | Food and coffee for the road                |
-| 🤝 Connections | 2 | People who open doors for you               |
-| 📱 Followers | 450 | Campus prank video led to social media fame |
-| 🪙 AI Tokens | 250,000 | Technical firepower                         |
-
-### Team Status
-
-| Status | Starting Value | Description                                |
-|--------|---------------|--------------------------------------------|
-| ✨ Inspiration | 60 / 100 | Keep it between 20–90 or face consequences |
-| 📈 Learning Curve | STEADY | Escalates through random events            |
-
-
-### Losing Conditions
-- Cash hits zero
-- Rations run out
-- Inspiration stays below 20 for 2 days → team loses steam
-- Inspiration stays above 90 for 2 days → team hits burnout
-- Fail to reach San Francisco by November 18th
-
-### Winning
-Reach San Francisco, compete in the Startup World Cup, and receive a score and placement:
-
-| Score | Result |
-|-------|--------|
-| 90–100 | 🥇 1st Place — $1,000,000 investment |
-| 75–89 | 🥈 2nd Place — $250,000 investment |
-| 60–74 | 🥉 3rd Place — $100,000 investment |
-| Below 60 | 📋 Did Not Place |
-
----
-
-## The Route
-
-14 landmarks in the map, 12 visited per playthrough (two fork points):
-
+### 📈 Metrics
 ```
-Lincoln, NE → ... → [FORK 1] Chimney Rock OR Sidney ...
-→ Denver → Pikes Peak → ... → Reno
-→ [FORK 2] Pacific Beach OR LinkedIn HQ
-→ Stanford GSB → Philz Coffee → San Francisco 🏁
+RESOURCES
+| 💰 Cash - $10,000
+| 🎒 Rations - Scales with departure date
+| 🤝 Connections - Open doors for product growth
+| 📱 Followers - Campus prank video led to local social media fame 
+| 🪙 AI Tokens - Technical firepower                         
+
+STATUS
+| ✨ Inspiration - Inspiration levels in check (too high = burnout, too low = lost steam)
+| 📚 Learning Curve - STEADY, HIGH, or STEEP (affects AI token usage)   |
 ```
 
-Travel costs increase by region as you head west:
 
-| Region | Daily Cost Multiplier |
-|--------|----------------------|
-| Great Plains | 1.0x |
-| Rockies | 1.25x |
-| Southwest | 1.4x |
-| West Coast | 1.75x |
+### 📐 Architecture
+Designed using a layered architecture with clear separation between game state, business logic, and static game data.
 
----
-
-## API Integration
-
-### 1. Twelve Data — KO Stock Price
-Live Coca-Cola (KO) stock price is used as a market confidence indicator, checked at three points in the journey: Lincoln (baseline), Pikes Peak (comparison), and Santa Clara School of Law (final adjustment). Price movement affects ration cost multipliers.
-
-- **Live mode**: Fetches real-time KO price from Twelve Data
-- **Fallback**: Uses a hardcoded mock price so the game always runs
-
-### 2. Deck of Cards API
-At Reno, the player can try their luck at the casino. A real card is drawn from a shuffled deck via the Deck of Cards API, and the card value determines the cash outcome.
-
-- **Live mode**: Calls `deckofcardsapi.com` — no API key required
-- **Fallback**: Randomly selects from the same 13-card array
-
-### 3. OSRM / OpenStreetMap Routing
-Real driving distances between landmarks are calculated using the Open Source Routing Machine (OSRM), powered by OpenStreetMap road data.
-
-- **Live mode**: Calls `router.project-osrm.org` — no API key required
-- **Fallback**: Uses `distanceFromPrevious` stored on each Landmark object
-
----
-
-## Architecture Overview
-
-### Package Structure
+**Package Structure**
 ```
 data/       — landmark and event data
 model/      — game state, landmarks, enums
@@ -152,6 +50,34 @@ service/    — game logic, events, APIs
 util/       — display, constants, helpers
 ```
 ---
+## ▶️ Quick Start
+
+**Prerequisites:**
+- Java 17 (Amazon Corretto 17 recommended)
+- Maven 3.6+
+
+**Run the Game:**
+```bash
+git clone https://github.com/rgulbrandson27/silicon-valley-trail.git
+cd silicon-valley-trail
+mvn compile
+mvn exec:java -Dexec.mainClass="com.raina.siliconvalleytrail.Main"
+```
+
+**Optional: API Key (Twelve Data)**  
+Used for live Coca-Cola stock prices. The game runs without it using mock data.
+
+```bash
+cp .env.example .env
+```
+
+Add to `.env`:
+```text
+TWELVE_DATA_API_KEY=your_key_here
+```
+No API keys required for Deck of Cards or OSRM APIs.
+
+
 
 ## Design Notes
 
@@ -181,53 +107,31 @@ The win/lose condition is time-based (reach San Francisco by November 18th), not
 
 ---
 
-## Testing
+## 🧪 Testing
 
-Tests are located in `src/test/java/com/raina/siliconvalleytrail/service/`.
-
-Run all tests:
 ```bash
 mvn test
 ```
+- API fallback behavior
+- Event outcomes
+- Distance calculations
+- Core game logic
+- Error Handling
 
-### CardApiServiceTest
-- Live API draws return valid card values
-- Mock fallback returns valid card values across 20 random draws
-- Cash outcomes correct for all card tiers (ACE, face cards, mid, low)
-- Outcome messages contain correct symbols for win/loss/break-even
 
-### RouteApiServiceTest
-- Lincoln to Ole's returns approximately correct real driving distance
-- Lincoln to San Francisco returns approximately correct total distance
-- Invalid coordinates return -1 (fallback signal)
-- All US landmark longitudes are negative (western hemisphere sanity check)
-- Same-location distance returns 0 or near-0
 
-### Future testing goals
-- Unit tests for every win/lose condition individually: cash zero, rations zero, deadline missed, low inspiration streak, high inspiration streak
-- Integration tests for full playthrough paths — every route combination (Chimney Rock vs Sidney, Pacific Beach vs LinkedIn HQ) and the cumulative impact on resources at San Francisco
-- Event impact tests ensuring no single random event can cause an instant game-over from a healthy starting resource state
-- Scoring validation tests ensuring correct point calculation for all cash tiers, connection counts, and follower growth rates
+## ⚖️ Trade-offs
+- Gameplay balance prioritized over strict realism
+- CLI interface to focus on backend design
+- Events are hardcoded (future: database-driven system)
 
 ---
 
-## Error Handling
-
-- API timeouts and failures fall back to mock data automatically — the game never crashes due to network issues
-- Invalid player input is caught and re-prompted with clear messaging
-- `listSaves()` null-checks `File.listFiles()` before iteration
-- `mkdirs()` return value is checked and warns the player if the save directory cannot be created
-- `PersistenceService` wraps all file operations in try-catch with user-facing error messages
-- Inspiration changes are clamped between 0 and 100 using `Math.min` / `Math.max`
-
----
-
-## If I Had More Time
+## ⌛ If I Had More Time
 
 - **Initial supply store**: Pre-departure store where players spend starting cash on rations, AI tokens, and supplies — meaningful tradeoffs before the journey begins, just like the original Oregon Trail
 - **Individual team member stats**: Engineers with their own morale, coffee dependency, and quirks affecting events differently and creating more personal storytelling
 - **Per-person ration tracking**: Each team member consuming individually based on coffee dependency rather than one shared daily unit
-- **Learning curve token scaling**: `LearningCurve` (STEADY/HIGH/STEEP) escalates through random events but doesn't yet affect AI token costs — the next planned implementation step
 - **Relational database for events**: Events are currently hardcoded. A database with trigger conditions, resource impacts, and location filters would make the event pool extensible without touching service code
 - **Full path coverage testing**: Systematically testing every fork combination and its cumulative resource impact at San Francisco
 - **Persistence upgrade**: Flat JSON via Jackson works but a relational database would enable leaderboards and session history
@@ -237,7 +141,7 @@ mvn test
 
 ## AI Usage
 
-Claude (Anthropic) was used extensively as a collaborative design and architecture partner throughout development. All architectural decisions were reasoned through in conversation — data structure choices (HashMap vs ArrayList, graph vs linked list), field naming conventions, derived vs stored values, immutability decisions, and the separation of anchored vs random events were all discussed and decided collaboratively.
+Claude (Anthropic) was used as a collaborative design and architecture partner throughout development. All architectural and data structure decisions were reasoned through in conversation.   ed values, immutability decisions, and the separation of anchored vs random events were all discussed and decided collaboratively.
 
 Code was written by the developer with AI assistance for reviewing structure, catching inconsistencies, and generating boilerplate. The game design, route, landmark selection, event narratives, scoring system, and overall creative direction are original. AI helped implement decisions; the developer made them.
 
