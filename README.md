@@ -132,9 +132,9 @@ mvn test
 - **Initial supply store**: Pre-departure store where players spend starting cash on rations, AI tokens, and supplies — meaningful tradeoffs before the journey begins, just like the original Oregon Trail
 - **Individual team member stats**: Engineers with their own morale, coffee dependency, and quirks affecting events differently and creating more personal storytelling
 - **Per-person ration tracking**: Each team member consuming individually based on coffee dependency rather than one shared daily unit
-- **Relational database for events**: Events are currently hardcoded. A database with trigger conditions, resource impacts, and location filters would make the event pool extensible without touching service code
+- **Persistence upgrade with a relational database for events**: Events are currently hardcoded. A database with trigger conditions, resource impacts, and location filters would make the event pool extensible without touching service code
 - **Full path coverage testing**: Systematically testing every fork combination and its cumulative resource impact at San Francisco
-- **Persistence upgrade**: Flat JSON via Jackson works but a relational database would enable leaderboards and session history
+- **Use of AI Agent/s**: Limitless ideas here!
 - **Web interface**: Spring Boot REST API wrapper to make the game browser-playable with a visual trail map
 
 ---
