@@ -43,14 +43,17 @@ GameDisplay {
     public static void displayInstructionsPage2() {
         System.out.printf("Other than ingenuity, there is not much%n");
         System.out.printf("to work with, but you do have the following:%n");
+        System.out.printf("─────────────────────────────────────%n");
         System.out.printf("RESOURCES──────────────%n");
         System.out.printf("💰 Cash - $10,000.   %n");
         System.out.printf("🤝 Connections - 2%n");
         System.out.printf("📱 Social Media Followers - 450 (campus prank video)%n");
         System.out.printf("🤖 AI Tokens - 250,000%n");
         System.out.printf("STATUS───────────────────────%n");
-        System.out.printf("✨ Inspiration - 60/100%n");
+        System.out.printf("✨ Inspiration - 50/100%n");
         System.out.printf("📈 Learning Curve - STEADY%n");
+        System.out.printf("─────────────────────────────────────%n");
+
     }
 
     public static void displayInstructionsPage3() {
