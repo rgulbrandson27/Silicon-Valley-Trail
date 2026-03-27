@@ -28,6 +28,8 @@ public class GameSession {
     //cola-cola costs
     private double initialKoPrice;
     private double rationCostMultiplier = 1.0;
+    private double lastKoPrice;
+    private Double koChangeSincePrevious;
 
     // team status
     private int inspiration;
@@ -58,7 +60,6 @@ public class GameSession {
     // required for Jackson deserialization
     public GameSession() {}
 
-    // constructor
     public GameSession(String sessionName, String founderName, String engineer1Name, String engineer2Name,
                        String engineer3Name, DepartureDate departureDate,
                        int totalDays, int startingCash) {
@@ -73,16 +74,16 @@ public class GameSession {
         this.startingCash = startingCash;
         this.cash = startingCash;
         this.rations = totalDays / 2;
-        this.connections = 0;
-        this.followers = 450;
-        this.aiTokens = 0;
-        this.inspiration = 50;
+        this.connections = GameConstants.STARTING_CONNECTIONS;   // was 0
+        this.followers = GameConstants.STARTING_FOLLOWERS;       // was 450
+        this.aiTokens = GameConstants.STARTING_AI_TOKENS;        // was 0
+        this.inspiration = GameConstants.STARTING_INSPIRATION;   // was 50
         this.learningCurve = LearningCurve.STEADY;
         this.daysElapsed = 0;
         this.milesRemaining = GameConstants.DEFAULT_ROUTE_MILES;
         this.currentLandmark = null;
         this.landmarksVisited = new ArrayList<>();
-        this.currentRegion = Region.GREAT_PLAINS;  // always start in Nebraska
+        this.currentRegion = Region.GREAT_PLAINS;
         this.dangerZoneCount = 0;
         this.gameOver = false;
         this.hasArrived = false;
@@ -153,6 +154,14 @@ public class GameSession {
     public double getRationCostMultiplier() { return rationCostMultiplier; }
     public void setRationCostMultiplier(double rationCostMultiplier) {
         this.rationCostMultiplier = rationCostMultiplier;
+    }
+
+    public double getLastKoPrice() { return lastKoPrice; }
+    public void setLastKoPrice(double lastKoPrice) { this.lastKoPrice = lastKoPrice; }
+
+    public Double getKoChangeSincePrevious() { return koChangeSincePrevious; }
+    public void setKoChangeSincePrevious(Double koChangeSincePrevious) {
+        this.koChangeSincePrevious = koChangeSincePrevious;
     }
 
     // travel progress

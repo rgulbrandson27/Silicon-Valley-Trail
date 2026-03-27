@@ -3,7 +3,6 @@ package com.raina.siliconvalleytrail;
 import com.raina.siliconvalleytrail.data.LandmarkData;
 import com.raina.siliconvalleytrail.model.*;
 import com.raina.siliconvalleytrail.service.*;
-import com.raina.siliconvalleytrail.model.PikesPeakEvent;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 import com.raina.siliconvalleytrail.model.GameSession;
@@ -46,6 +45,7 @@ public class Main {
                     running = false;
                 }
             }
+
         }
     }
 
@@ -77,10 +77,22 @@ public class Main {
         int totalDays;
 
         switch (dateChoice) {
-            case 1 -> { departureDate = DepartureDate.OCTOBER_28; totalDays = 21; }
-            case 2 -> { departureDate = DepartureDate.NOVEMBER_1; totalDays = 17; }
-            case 3 -> { departureDate = DepartureDate.NOVEMBER_5; totalDays = 13; }
-            default -> { departureDate = DepartureDate.NOVEMBER_10; totalDays = 8; }
+            case 1 -> {
+                departureDate = DepartureDate.OCTOBER_28;
+                totalDays = 21;
+            }
+            case 2 -> {
+                departureDate = DepartureDate.NOVEMBER_1;
+                totalDays = 17;
+            }
+            case 3 -> {
+                departureDate = DepartureDate.NOVEMBER_5;
+                totalDays = 13;
+            }
+            default -> {
+                departureDate = DepartureDate.NOVEMBER_10;
+                totalDays = 8;
+            }
         }
 
         // create session
@@ -100,21 +112,47 @@ public class Main {
         StockApiService stockApi = new StockApiService();
         RandomEventService randomEventService = new RandomEventService();
 
-        System.out.printf("%nGood luck, %s! The Silicon Prairie believes in you.%n",
+        System.out.printf("%nGood luck, and safe travels!%n",
                 founderName);
-        // GameDisplay.waitForEnter();
 
+        GameDisplay.waitForEnter();
+
+        // Cola prices
         double koPrice1 = stockApi.getKoClosePrice();
         session.setInitialKoPrice(koPrice1);
+        session.setLastKoPrice(koPrice1);   // 👈 THIS is important
         session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice1));
-        System.out.println(stockApi.getMarketMessage(koPrice1, session.getRationCostMultiplier()));
+
         // GameDisplay.waitForEnter();
+
+        System.out.println("Starting Overview");
+        GameDisplay.displayStatus(session);
+        System.out.printf("(Starting Coca-Cola rate: $%.4f)%n", koPrice1);
+
+//        System.out.println();
+//        System.out.println(stockApi.getMarketMessage(koPrice1, session.getRationCostMultiplier()));
+        GameDisplay.waitForEnter();
 
         // ── GAME LOOP ──────────────────────────────────────────────
         while (!session.isGameOver() && !session.hasArrived()) {
 
             // display current status
             GameDisplay.displayStatus(session);
+
+            Double change = session.getKoChangeSincePrevious();
+            if (change != null) {
+                System.out.println();
+                if (change > 0) {
+                    System.out.printf("📈 Coca-Cola is up by $%.4f.%n", change);
+                    System.out.println("Ration costs have increased.");
+                } else if (change < 0) {
+                    System.out.printf("📉 Coca-Cola is down by $%.4f.%n", Math.abs(change));
+                    System.out.println("Ration costs have decreased.");
+                } else {
+                    System.out.println("📊 Coca-Cola hasn't moved.");
+                    System.out.println("Ration costs remain stable.");
+                }
+            }
 
             // show action menu
             GameDisplay.displayActionMenu();
@@ -140,46 +178,60 @@ public class Main {
                     routeService.travel(session, next);
                     session.setCurrentLandmark(chosenNext);
                     session.addLandmarkVisited(chosenNext);
-                    GameDisplay.displayArrival(next.getName(), next.getDescription(), next.getDistanceFromPrevious());
+                    GameDisplay.displayArrival(
+                            next.getName(),
+                            next.getDescription(),
+                            next.getDistanceFromPrevious()
+                    );
 
                     // apply landmark gains
                     session.setFollowers(session.getFollowers() + next.getFollowerGain());
                     session.setInspiration(Math.min(
                             session.getInspiration() + next.getInspirationGain(),
-                            GameConstants.MAX_INSPIRATION));
+                            GameConstants.MAX_INSPIRATION
+                    ));
 
                     // landmark specific events
-                    if (chosenNext.equals("Denver"))    new DenverEvent().execute(session);
-                    if (chosenNext.equals("Reno"))      new RenoEvent().execute(session);
+                    if (chosenNext.equals("Denver")) {
+                        new DenverEvent().execute(session);
+                    }
+
+                    if (chosenNext.equals("Reno")) {
+                        new RenoEvent().execute(session);
+                    }
+
+                    if (chosenNext.equals("Sidny")) {
+                        new SidnyEvent().execute(session);
+                    }
 
                     if (chosenNext.equals("Pikes Peak")) {
                         new PikesPeakEvent().execute(session);
+
                         double koPrice2 = stockApi.getKoClosePrice();
-                        session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice2));
-                        double change = koPrice2 - session.getInitialKoPrice();
-                        if (change > 0) {
-                            System.out.printf("📈 KO is up $%.4f since Lincoln.%n", change);
-                        } else if (change < 0) {
-                            System.out.printf("📉 KO is down $%.4f since Lincoln.%n", Math.abs(change));
-                        } else {
-                            System.out.println("📊 KO hasn't moved since Lincoln. Markets holding steady.");
-                        }
-                        System.out.println(stockApi.getMarketMessage(koPrice2, session.getRationCostMultiplier()));
-//                        GameDisplay.waitForEnter();
+                        double changeFromPrevious = koPrice2 - session.getLastKoPrice();
+
+                        session.setKoChangeSincePrevious(changeFromPrevious);
+                        session.setLastKoPrice(koPrice2);
+                        session.setRationCostMultiplier(
+                                stockApi.getRationCostMultiplier(koPrice2)
+                        );
                     }
 
                     if (chosenNext.equals("Santa Clara School of Law")) {
                         double koPrice3 = stockApi.getKoClosePrice();
-                        session.setRationCostMultiplier(stockApi.getRationCostMultiplier(koPrice3));
-                        System.out.println(stockApi.getMarketMessage(koPrice3, session.getRationCostMultiplier()));
-//                        GameDisplay.waitForEnter();
+                        double changeFromPrevious = koPrice3 - session.getLastKoPrice();
+
+                        session.setKoChangeSincePrevious(changeFromPrevious);
+                        session.setLastKoPrice(koPrice3);
+                        session.setRationCostMultiplier(
+                                stockApi.getRationCostMultiplier(koPrice3)
+                        );
                     }
 
                     if (chosenNext.equals("San Francisco")) {
                         session.setHasArrived(true);
                         GameDisplay.displayVictory(session);
                         new ScoringService().calculateFinalScore(session);
-//                        GameDisplay.waitForEnter();
                     }
                 }
 
@@ -188,7 +240,8 @@ public class Main {
                     session.setRations(session.getRations() - 1);
                     session.setInspiration(Math.min(
                             session.getInspiration() + 10,
-                            GameConstants.MAX_INSPIRATION));
+                            GameConstants.MAX_INSPIRATION
+                    ));
                     session.setDaysElapsed(session.getDaysElapsed() + 1);
                     System.out.printf("%nThe team rests. Inspiration +10, Rations -1.%n");
                 }
@@ -225,28 +278,29 @@ public class Main {
             if (eventFired) {
                 GameDisplay.waitForEnter();
             }
+
             // update inspiration streaks
-            updateInspirationStreaks(session);
+            updateInspirationStreak(session);
 
             // check losing conditions
             gameService.checkDangerZone(session);
             gameService.checkLosingConditions(session);
         }
     }
+        private static void updateInspirationStreak(GameSession session) {
+            int inspiration = session.getInspiration();
 
-    private static void updateInspirationStreaks(GameSession session) {
-        int inspiration = session.getInspiration();
-
-        if (inspiration < GameConstants.LOW_INSPIRATION_THRESHOLD) {
-            session.setLowInspirationStreak(session.getLowInspirationStreak() + 1);
-            session.setHighInspirationStreak(0);
-        } else if (inspiration > GameConstants.HIGH_INSPIRATION_THRESHOLD) {
-            session.setHighInspirationStreak(session.getHighInspirationStreak() + 1);
-            session.setLowInspirationStreak(0);
-        } else {
-            session.setLowInspirationStreak(0);
-            session.setHighInspirationStreak(0);
+            if (inspiration < GameConstants.LOW_INSPIRATION_THRESHOLD) {
+                session.setLowInspirationStreak(session.getLowInspirationStreak() + 1);
+                session.setHighInspirationStreak(0);
+            } else if (inspiration > GameConstants.HIGH_INSPIRATION_THRESHOLD) {
+                session.setHighInspirationStreak(session.getHighInspirationStreak() + 1);
+                session.setLowInspirationStreak(0);
+            } else {
+                // reset both if in neutral range
+                session.setLowInspirationStreak(0);
+                session.setHighInspirationStreak(0);
+            }
         }
-    }
 }
 

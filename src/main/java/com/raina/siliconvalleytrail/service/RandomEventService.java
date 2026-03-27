@@ -65,7 +65,7 @@ public class RandomEventService {
         System.out.println("   Engineer 2's laptop gave up the ghost.");
         System.out.println("   Cash -$800 | AI Tokens -3");
         session.setCash(session.getCash() - 800);
-        session.setAiTokens(Math.max(session.getAiTokens() - 3, 0));
+        session.setAiTokens(Math.max(session.getAiTokens() - 500000, 0));
     }
 
     private void goodCoffee(GameSession session) {
@@ -82,10 +82,13 @@ public class RandomEventService {
         System.out.println("\n🎵 MUSIC CONFLICT!");
         System.out.println("   The founder wants lo-fi beats. The engineers want death metal.");
         System.out.println("   Nobody wins. The team stops at Best Buy for noise cancelling headphones.");
+        System.out.println("   AI Tokens decrease due to extensive headphone model research.");
+
         System.out.println("   Cash -$400 | Inspiration -5");
         session.setCash(session.getCash() - 400);
         session.setInspiration(Math.max(
                 session.getInspiration() - 5, 0));
+        session.setAiTokens(Math.max(session.getAiTokens() - 500000, 0));
     }
 
     private void noInternet(GameSession session) {

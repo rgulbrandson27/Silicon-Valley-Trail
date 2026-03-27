@@ -81,7 +81,7 @@ public class StockApiService {
     public String getMarketMessage(double koPrice, double multiplier) {
         if (multiplier < 1.0) {
             return String.format(
-                    "📈 KO is trading at $%.24f — market confidence is high. " +
+                    "📈 KO is trading at $%.4f — market confidence is high. " +
                             "Rations cost 10%% less today.", koPrice);
         } else if (multiplier > 1.0) {
             return String.format(

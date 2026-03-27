@@ -41,7 +41,7 @@ public class PikesPeakEvent extends AnchoredEvent {
             System.out.println("   Someone stares out the window for a long time.");
         }
 
-        GameDisplay.waitForEnter();
+//        GameDisplay.waitForEnter();
     }
 
     private void driveToSummit(GameSession session) {
@@ -62,7 +62,7 @@ public class PikesPeakEvent extends AnchoredEvent {
                 session.getInspiration() + 20, 100));
         session.setDaysElapsed(session.getDaysElapsed() + 1);
 
-        GameDisplay.waitForEnter();
+//        GameDisplay.waitForEnter();
 
         // 1 in 2 chance of dropped phone
         if (randomChance(2)) {

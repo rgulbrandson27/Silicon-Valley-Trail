@@ -3,7 +3,8 @@ package com.raina.siliconvalleytrail.util;
 import com.raina.siliconvalleytrail.model.GameSession;
 import java.util.Scanner;
 
-public class GameDisplay {
+public class
+GameDisplay {
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -84,9 +85,9 @@ public class GameDisplay {
 
     public static void displayForkChoice(String option1, String option2) {
         System.out.printf("%nTime to make a decision!%n");
-        System.out.printf("%nKeep heading to Denver and stop by Cabela's in Sidney, NE%n");
+        System.out.printf("%nKeep heading to Denver and stop by Cabela's in Sidny, NE%n");
         System.out.printf("   OR%n");
-        System.out.printf("Deepen their Nebraskan roots with a detour to Chimney Rock%n");
+        System.out.printf("Deepen your Nebraskan roots with a detour to Chimney Rock%n");
         System.out.printf("─────────────────────────────────────%n");
         System.out.printf("1. %s%n", option1);
         System.out.printf("2. %s%n", option2);
