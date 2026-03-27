@@ -1,11 +1,9 @@
-package com.raina.siliconvalleytrail.service;
+package com.raina.siliconvalleytrail.model;
 
-import com.raina.siliconvalleytrail.model.GameSession;
-import com.raina.siliconvalleytrail.model.AnchoredEvent;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 
-public class RiverEventService extends AnchoredEvent {
+public class RiverEvent extends AnchoredEvent {
 
     @Override
     public void execute(GameSession session) {
