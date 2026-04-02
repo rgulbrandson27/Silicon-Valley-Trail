@@ -1,8 +1,8 @@
-package com.raina.siliconvalleytrail.model;
+package com.raina.siliconvalleytrail.service.event;
 
 import com.raina.siliconvalleytrail.model.GameSession;
 
-public class SidnyEvent {
+public class SidnyEvent extends AnchoredEvent {
 
     public void execute(GameSession session) {
         System.out.println();

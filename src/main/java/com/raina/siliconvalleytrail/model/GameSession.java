@@ -25,15 +25,15 @@ public class GameSession {
     private int followers;
     private int aiTokens;
 
+    // team status
+    private int inspiration;
+    private LearningCurve learningCurve;
+
     //cola-cola costs
     private double initialKoPrice;
     private double rationCostMultiplier = 1.0;
     private double lastKoPrice;
     private Double koChangeSincePrevious;
-
-    // team status
-    private int inspiration;
-    private LearningCurve learningCurve;
 
     // time
     private DepartureDate departureDate;
@@ -72,6 +72,7 @@ public class GameSession {
         this.departureDate = departureDate;
         this.totalDays = totalDays;
         this.startingCash = startingCash;
+
         this.cash = startingCash;
         this.rations = totalDays / 2;
         this.connections = GameConstants.STARTING_CONNECTIONS;   // was 0
@@ -115,7 +116,8 @@ public class GameSession {
     public String getEngineer3Name() { return engineer3Name; }
     public void setEngineer3Name(String engineer3Name) { this.engineer3Name = engineer3Name; }
 
-    // resources
+//    public updateResources (currentLandmark, )
+
     public int getCash() { return cash; }
     public void setCash(int cash) { this.cash = cash; }
 
@@ -141,16 +143,13 @@ public class GameSession {
     // time
     public DepartureDate getDepartureDate() { return departureDate; }
     public void setDepartureDate(DepartureDate departureDate) { this.departureDate = departureDate; }
-
     public int getTotalDays() { return totalDays; }
-
     public int getDaysElapsed() { return daysElapsed; }
     public void setDaysElapsed(int daysElapsed) { this.daysElapsed = daysElapsed; }
 
     //coca-cola costs
     public double getInitialKoPrice() { return initialKoPrice; }
     public void setInitialKoPrice(double initialKoPrice) { this.initialKoPrice = initialKoPrice; }
-
     public double getRationCostMultiplier() { return rationCostMultiplier; }
     public void setRationCostMultiplier(double rationCostMultiplier) {
         this.rationCostMultiplier = rationCostMultiplier;

@@ -1,8 +1,6 @@
-package com.raina.siliconvalleytrail.model;
+package com.raina.siliconvalleytrail.service.event;
 
-import com.raina.siliconvalleytrail.model.AnchoredEvent;
 import com.raina.siliconvalleytrail.model.GameSession;
-import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 
 public class PikesPeakEvent extends AnchoredEvent {
@@ -29,7 +27,7 @@ public class PikesPeakEvent extends AnchoredEvent {
         System.out.println("1. Drive up the Pikes Peak Highway yourself");
         System.out.println("   (costs 1 day, but the views are worth it)");
         System.out.println("2. Skip it — you don't have time to waste");
-        System.out.printf("Enter choice (1-2): ");
+        System.out.print("Enter choice (1-2): ");
 
         int choice = GameDisplay.getPlayerChoice(1, 2);
 

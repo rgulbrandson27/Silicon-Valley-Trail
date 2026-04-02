@@ -1,6 +1,6 @@
-## 🏞️ Silicon Valley Trail
+## 🚗 Silicon Valley Trail 
 
- **A CLI startup survival game inspired by "Oregon Trail"** 
+ **A startup survival game inspired by "Oregon Trail"** 
 
 >Guide your startup team from Lincoln, Nebraska to the 🏆STARTUP WORLD CUP🏆 in San Francisco while managing resources, making strategic decisions, and surviving unpredictable events.  Game play is influenced by real-world data through public APIs.
 ---
@@ -15,7 +15,7 @@
 - **Events** - Some events are landmark specific, while others are random.  Events can have a positive or negative impact on team resources.
 - **Branching Routes** - Forks in the road enhance user decision-making and game results.
 - **API Integration** 
-  - The team's energy source cost may change twice during the game due to live market rates.
+  - The team's energy source/rations cost may change twice during the game due to live market rates.
   - Deck of Cards API (Reno casino event).
   - OSRM routing API affects miles traveled and miles remaining.
 - **Offline Play** - Automatic fall back to mock data.

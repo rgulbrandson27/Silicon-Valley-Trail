@@ -1,4 +1,4 @@
-package com.raina.siliconvalleytrail.service;
+package com.raina.siliconvalleytrail.service.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

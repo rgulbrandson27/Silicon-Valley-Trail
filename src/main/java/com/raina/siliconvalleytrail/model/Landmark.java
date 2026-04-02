@@ -1,5 +1,7 @@
 package com.raina.siliconvalleytrail.model;
 
+import com.raina.siliconvalleytrail.service.event.AnchoredEvent;
+
 import java.util.List;
 
 public class Landmark {
@@ -15,13 +17,15 @@ public class Landmark {
     private final double latitude;
     private final double longitude;
     private final int milesToSanFrancisco;
+    private final AnchoredEvent anchoredEvent;
     private final List<String> nextLandmarkNames;
+
 
     public Landmark(String name, String description, LandmarkType type,
                     Region region, int distanceFromPrevious, boolean isForkPoint,
                     int followerGain, int inspirationGain,
                     double latitude, double longitude,
-                    int milesToSanFrancisco,
+                    int milesToSanFrancisco, AnchoredEvent anchoredEvent,
                     List<String> nextLandmarkNames) {
         this.name = name;
         this.description = description;
@@ -35,7 +39,8 @@ public class Landmark {
         this.longitude = longitude;
         this.milesToSanFrancisco = milesToSanFrancisco;
         this.nextLandmarkNames = nextLandmarkNames;
-    }
+        this.anchoredEvent = anchoredEvent;
+        }
 
     // getters — no setters, landmarks are immutable
     public String getName() { return name; }
@@ -49,5 +54,7 @@ public class Landmark {
     public double getLatitude() { return latitude; }
     public double getLongitude() { return longitude; }
     public int getMilesToSanFrancisco() { return milesToSanFrancisco; }
+    public AnchoredEvent anchoredEvent() {return anchoredEvent; }
     public List<String> getNextLandmarkNames() { return nextLandmarkNames; }
 }
+

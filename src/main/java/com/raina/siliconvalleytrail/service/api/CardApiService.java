@@ -1,4 +1,4 @@
-package com.raina.siliconvalleytrail.service;
+package com.raina.siliconvalleytrail.service.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +22,7 @@ public class CardApiService {
         this.random = new Random();
     }
 
-    // main method — call this at Reno
+    // main method — called at Reno
     public String drawCard() {
         try {
             String deckId = getNewDeckId();
@@ -114,3 +114,4 @@ public class CardApiService {
         }
     }
 }
+//🃏

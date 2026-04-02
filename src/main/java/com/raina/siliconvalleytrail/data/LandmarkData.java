@@ -1,8 +1,7 @@
 package com.raina.siliconvalleytrail.data;
 
-import com.raina.siliconvalleytrail.model.Landmark;
-import com.raina.siliconvalleytrail.model.LandmarkType;
-import com.raina.siliconvalleytrail.model.Region;
+import com.raina.siliconvalleytrail.model.*;
+import com.raina.siliconvalleytrail.service.event.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,9 @@ public class LandmarkData {
                 0, false, 0, 0,
                 40.8136, -96.7026,
                 1615,
+                null,
                 List.of("Ole's Big Game Steakhouse")
+
         ));
 
         landmarks.put("Ole's Big Game Steakhouse", new Landmark(
@@ -39,6 +40,7 @@ public class LandmarkData {
                 287, true, 75, 15,
                 41.1156, -101.3684,
                 1360,
+                null,
                 List.of("Chimney Rock", "Sidny")
         ));
 
@@ -53,6 +55,7 @@ public class LandmarkData {
                 130, false, 10, 15,
                 41.7033, -103.3422,
                 1290,
+                null,
                 List.of("Denver")
         ));
 
@@ -67,7 +70,9 @@ public class LandmarkData {
                 80, false, 10, 5,
                 41.1428, -102.9774,
                 1330,
+                new SidnyEvent(),
                 List.of("Denver")
+
         ));
 
         landmarks.put("Denver", new Landmark(
@@ -82,7 +87,9 @@ public class LandmarkData {
                 200, false, 15, 10,
                 39.7392, -104.9903,
                 1160,
+                new DenverEvent(),
                 List.of("Pikes Peak")
+
         ));
 
         landmarks.put("Pikes Peak", new Landmark(
@@ -97,6 +104,7 @@ public class LandmarkData {
                 75, false, 20, 10,
                 38.8409, -105.0422,
                 1140,
+                new PikesPeakEvent(),
                 List.of("Colorado River Crossing")
         ));
 
@@ -110,6 +118,7 @@ public class LandmarkData {
                 300, false, 0, 0,
                 38.5733, -109.5498,
                 840,
+                new RiverEvent(),
                 List.of("Reno")
         ));
 
@@ -117,6 +126,7 @@ public class LandmarkData {
                 "Reno, Nevada",
                 """
                 The Biggest Little City in the World.
+                ♠️♦️♣️♥️
                 What happens in Reno... probably costs you cash.
                 """,
                 LandmarkType.CITY,
@@ -124,6 +134,7 @@ public class LandmarkData {
                 450, false, 10, 0,
                 39.5296, -119.8138,
                 230,
+                new RenoEvent(),
                 List.of("Santa Clara School of Law")
         ));
 
@@ -138,6 +149,7 @@ public class LandmarkData {
                 230, true, 15, 5,
                 37.3496, -121.9390,
                 20,
+                null,
                 List.of("Pacific Beach", "LinkedIn HQ")
         ));
 
@@ -152,6 +164,7 @@ public class LandmarkData {
                 20, false, 15, 10,
                 37.7609, -122.5107,
                 25,
+                null,
                 List.of("Stanford GSB")
         ));
 
@@ -167,6 +180,7 @@ public class LandmarkData {
                 20, false, 25, 10,
                 37.3861, -122.0839,
                 20,
+                null,
                 List.of("Stanford GSB")
         ));
 
@@ -181,6 +195,7 @@ public class LandmarkData {
                 15, false, 25, 5,
                 37.4275, -122.1697,
                 15,
+                null,
                 List.of("Philz Coffee")
         ));
 
@@ -195,6 +210,7 @@ public class LandmarkData {
                 10, false, 10, 10,
                 37.7749, -122.4194,
                 2,
+                null,
                 List.of("San Francisco")
         ));
 
@@ -210,6 +226,7 @@ public class LandmarkData {
                 5, false, 0, 0,
                 37.7749, -122.4194,
                 0,
+                null,
                 List.of()
         ));
 

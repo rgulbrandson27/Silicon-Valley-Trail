@@ -1,14 +1,14 @@
 package com.raina.siliconvalleytrail;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.raina.siliconvalleytrail.data.LandmarkData;
 import com.raina.siliconvalleytrail.model.*;
 import com.raina.siliconvalleytrail.service.*;
+import com.raina.siliconvalleytrail.service.api.StockApiService;
+import com.raina.siliconvalleytrail.service.event.*;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 import com.raina.siliconvalleytrail.model.GameSession;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -119,7 +119,7 @@ public class Main {
     private static void runGame(GameSession session, PersistenceService persistenceService) {
 
         Map<String, Landmark> landmarks = LandmarkData.getLandmarks();
-        RouteService routeService = new RouteService();
+        TravelService routeService = new TravelService();
         GameService gameService = new GameService();
         StockApiService stockApi = new StockApiService();
         RandomEventService randomEventService = new RandomEventService();
@@ -163,8 +163,6 @@ public class Main {
 
                     Landmark next = landmarks.get(chosenNext);
                     routeService.travel(session, next);
-                    session.setCurrentLandmark(chosenNext);
-                    session.addLandmarkVisited(chosenNext);
                     GameDisplay.displayArrival(next.getName(), next.getDescription(), next.getDistanceFromPrevious());
 
                     session.setFollowers(session.getFollowers() + next.getFollowerGain());

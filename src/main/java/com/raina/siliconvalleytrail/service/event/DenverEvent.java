@@ -1,5 +1,6 @@
-package com.raina.siliconvalleytrail.model;
+package com.raina.siliconvalleytrail.service.event;
 
+import com.raina.siliconvalleytrail.model.GameSession;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 

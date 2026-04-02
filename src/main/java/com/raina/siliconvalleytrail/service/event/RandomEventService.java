@@ -1,4 +1,4 @@
-package com.raina.siliconvalleytrail.service;
+package com.raina.siliconvalleytrail.service.event;
 
 import com.raina.siliconvalleytrail.model.GameSession;
 import com.raina.siliconvalleytrail.model.LearningCurve;
@@ -45,7 +45,7 @@ public class RandomEventService {
     private void viralPost(GameSession session) {
         System.out.println("\n📱 YOUR POST WENT VIRAL!");
         System.out.println("   Someone shared your road trip story.");
-        System.out.println("   Followers +300 | Inspiration +10");
+        System.out.println("   Followers +300 | Inspiration +5");
         session.setFollowers(session.getFollowers() + 300);
         session.setInspiration(Math.min(
                 session.getInspiration() + 5,
