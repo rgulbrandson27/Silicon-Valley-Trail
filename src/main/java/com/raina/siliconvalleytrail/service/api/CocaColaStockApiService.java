@@ -8,7 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class StockApiService {
+public class CocaColaStockApiService {
 
     private static final String BASE_URL = "https://api.twelvedata.com/time_series";
     private static final String SYMBOL = "KO";
@@ -18,7 +18,7 @@ public class StockApiService {
     private final ObjectMapper objectMapper;
     private final String apiKey;
 
-    public StockApiService() {
+    public CocaColaStockApiService() {
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.apiKey = System.getenv("TWELVE_DATA_API_KEY");

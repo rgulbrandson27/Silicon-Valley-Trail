@@ -1,4 +1,4 @@
-package com.raina.siliconvalleytrail.service.event;
+package com.raina.siliconvalleytrail.service.event.anchored;
 
 import com.raina.siliconvalleytrail.model.GameSession;
 import com.raina.siliconvalleytrail.util.GameConstants;

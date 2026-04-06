@@ -6,7 +6,7 @@ public class GameConstants {
     public static final int STARTING_CONNECTIONS = 2;
     public static final int STARTING_FOLLOWERS = 450;
     public static final int STARTING_AI_TOKENS = 250000;
-    public static final int STARTING_INSPIRATION = 50;
+    public static final int STARTING_INSPIRATION = 50;  // displayed as percentage
 
     public static final int DANGER_ZONE_CASH_THRESHOLD = 2000;
     public static final int MAX_INSPIRATION = 100;

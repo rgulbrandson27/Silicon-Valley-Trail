@@ -1,14 +1,14 @@
 ## 🚗 Silicon Valley Trail 
 
- **A startup survival game inspired by "Oregon Trail"** 
+ **A replayable survival game inspired by "Oregon Trail"** 
 
->Guide your startup team from Lincoln, Nebraska to the 🏆STARTUP WORLD CUP🏆 in San Francisco while managing resources, making strategic decisions, and surviving unpredictable events.  Game play is influenced by real-world data through public APIs.
+>Guide a scrappy startup team from the Silicon Prairie to the Silicon Valley to complete in the 🏆STARTUP WORLD CUP🏆.  Manage your cash and other resources throughout the journey, making strategic decisions, facing unpredictable events.  Game play is influenced by real-world data through public APIs.
 ---
 ## Game Overview
 
-- Travel across 14 landmarks with branching paths
-- Travel costs increase as you move west
-- Choose a departure date and balance pace, business risks, and resources
+- Choose a departure date to balance pace, business risks, and resources.  
+- Travel across 12 landmarks with branching paths.
+- Travel costs increase as you move west.
 
 ### ⚙️ Features
 - **Game Loop** - Each day you encounter events and choose actions.
@@ -40,14 +40,49 @@ STATUS
 
 
 ### 📐 Architecture
-Designed using a layered architecture with clear separation between game state, business logic, and static game data.
+Uses a layered architecture with clear separation between game state, business logic, and static game data.
 
-**Package Structure**
 ```
-data/       — landmark and event data
-model/      — game state, landmarks, enums
-service/    — game logic, events, APIs
-util/       — display, constants, helpers
+## 📁 Project Structure
+
+silicon-valley-trail/
+│
+├── data/
+│   └── LandmarkData.java        # Static attributes
+│
+├── model/
+│   ├── GameSession.java        # Core game state
+│   ├── GameEvent.java          # Base event model
+│   ├── Landmark.java           # Location entity
+│   ├── CompetitionResult.java  # Outcome tracking
+│   ├── DepartureDate.java      # Game timing
+│   ├── LandmarkType.java       # Enum
+│   ├── LearningCurve.java      # Enum
+│   └── Region.java             # Enum
+│
+├── service/
+│   ├── GameService.java        # Main game loop logic
+│   ├── TravelService.java      # Movement & progression
+│   ├── ScoringService.java     # Score calculation
+│   ├── PersistenceService.java # Save/load state
+│   ├── RandomEventService.java # Random event generation
+│   │
+│   ├── api/                   # External API integrations
+│   │
+│   └── event/
+│       └── anchored/
+│           ├── AnchoredEvent.java
+│           ├── DenverEvent.java
+│           ├── PikesPeakEvent.java
+│           ├── RenoEvent.java
+│           ├── RiverEvent.java
+│           └── SidneyEvent.java
+│
+├── util/
+│   ├── GameConstants.java      # Config & constants
+│   └── GameDisplay.java        # CLI display helpers
+│
+└── Main.java
 ```
 ---
 ## ▶️ Quick Start
@@ -82,16 +117,17 @@ No API keys required for Deck of Cards or OSRM APIs.
 ## Design Notes
 
 ### GameSession as state container, services as rule enforcers
-`GameSession` holds all mutable game state. Services make decisions. A method belongs in `GameSession` only if it uses exclusively that class's own fields — for example, `getDaysRemaining()` is derived (`totalDays - daysElapsed`) rather than stored, eliminating the risk of values getting out of sync. Everything else is a service concern.
+`GameSession` holds all mutable game state such as current location and resource levels.  A method belongs in `GameSession` only if it uses exclusively that class's own fields — for example, `getDaysRemaining()` is derived (`totalDays - daysElapsed`) rather than stored, eliminating the risk of values getting out of sync. Everything else is a service concern.
 
-### Immutable Landmarks
-All `Landmark` fields are `final`. Landmarks are game configuration, not game state — they never change during gameplay. Only `GameSession` is mutable. This mirrors the real world: Chimney Rock doesn't move, but your cash balance does.
+### Landmarks
+`Landmark` fields are `final` to represent real travel.
 
 ### HashMap + embedded graph for landmark navigation
-Landmarks are stored in a `HashMap<String, Landmark>` for O(1) name-based lookup. Each `Landmark` carries a `List<String> nextLandmarkNames` — the graph edges. This decouples storage order from navigation order, meaning new landmarks can be added anywhere without restructuring the route. At fork points, `nextLandmarkNames` contains two entries; `RouteService` detects this and presents a choice to the player. For most of the route, landmarks behave like a linked list (one next connection). Fork points are where the graph structure becomes essential — a linked list cannot model branching without significant restructuring.
+Landmarks are stored in a `HashMap<String, Landmark>` for O(1) name-based lookup. 
+Storage order and game navigation order are decoupled, allowing for game model alterations (ex. new forks in the road) without significant restructuring. Each `Landmark` carries a `List<String> nextLandmarkName(s)` — the graph edges
 
 ### Anchored vs Random events — separated by design
-Location-specific events (Denver restaurant choices, Reno casino, Pikes Peak Cog Railway miss) extend an abstract `AnchoredEvent` superclass and execute deterministically on arrival at a specific landmark. Random events (`RandomEventService`) fire with a 1-in-3 chance each turn from a pool of 10 events — flat tires, viral posts, team conflicts, spoiled food, and learning curve escalations. Separating these two concerns keeps `Main` clean and makes each type easy to extend independently: adding a new anchored event is one new class; adding a new random event is one new private method.
+Location-specific events allow for user decisions unique to the location (go to top of Pikes Peak).  These events extend an abstract `AnchoredEvent` superclass and execute upon landmark arrival.  Random events (`RandomEventService`) have a 1-in-3 chance of occurence throughout the game and randomly drawn from an arrayList of 10+ events (flat tire, team conflict).  This separation keeps `Main` clean and allows for easy addition of both anchored and random events.   
 
 ### Jackson for persistence
 Save files are serialized to JSON using Jackson's `ObjectMapper` with pretty-printing enabled for human readability. Each save is named by the player and stored in the `saves/` directory with the session UUID appended to prevent collisions. The no-arg constructor on `GameSession` enables Jackson deserialization without requiring additional configuration.
@@ -121,27 +157,26 @@ mvn test
 
 
 ## ⚖️ Trade-offs
-- Gameplay balance prioritized over strict realism
-- CLI interface to focus on backend design
-- Events are hardcoded (future: database-driven system)
+- Gameplay resource state is prioritized over strict realism.
+- Game has a CLI only interface to allow for focus on backend design concepts.
+- Events are hardcoded (future: database-driven system).
 
 ---
 
 ## ⌛ If I Had More Time
 
-- **Initial supply store**: Pre-departure store where players spend starting cash on rations, AI tokens, and supplies — meaningful tradeoffs before the journey begins, just like the original Oregon Trail
-- **Individual team member stats**: Engineers with their own morale, coffee dependency, and quirks affecting events differently and creating more personal storytelling
-- **Per-person ration tracking**: Each team member consuming individually based on coffee dependency rather than one shared daily unit
-- **Persistence upgrade with a relational database for events**: Events are currently hardcoded. A database with trigger conditions, resource impacts, and location filters would make the event pool extensible without touching service code
-- **Full path coverage testing**: Systematically testing every fork combination and its cumulative resource impact at San Francisco
-- **Use of AI Agent/s**: Limitless ideas here!
-- **Web interface**: Spring Boot REST API wrapper to make the game browser-playable with a visual trail map
+- **Initial supply store**: Pre-departure store where players spend starting cash on rations, AI tokens, and supplies — meaningful tradeoffs before the journey begins, just like the original Oregon Trail.
+- **Individual team member stats**: Team members differ in ways that could affect game play, such as caffeine dependency levels, unique quirks that become relevant throughout travel (ex. scared of heights, overly focused on cash flow).
+- **Persistence upgrade with a relational database for events**: Events are currently hardcoded. A database with trigger conditions, resource impacts, and location filters would make the event pool extensible without touching service code.
+- **Full path coverage testing**: Systematically testing every fork combination and its cumulative resource impact at San Francisco.
+- **Web interface**: Spring Boot REST API wrapper to make the game browser-playable with a visual trail map.
+- **Use of AI Agent/s**: Allowing team members to gather information or ask for recommendations prior decision-making.  Limitless ideas here!
 
 ---
 
 ## AI Usage
 
-Claude (Anthropic) was used as a collaborative design and architecture partner throughout development. All architectural and data structure decisions were reasoned through in conversation.   ed values, immutability decisions, and the separation of anchored vs random events were all discussed and decided collaboratively.
+Claude (Anthropic) and OpenAi/ChatGPT were used as instructures thoughtout collaborative design and architecture partner throughout development.   Decisions were discussed and suggestions were challenged.  The developer made final decisions regarding game sturcture.  
 
 Code was written by the developer with AI assistance for reviewing structure, catching inconsistencies, and generating boilerplate. The game design, route, landmark selection, event narratives, scoring system, and overall creative direction are original. AI helped implement decisions; the developer made them.
 

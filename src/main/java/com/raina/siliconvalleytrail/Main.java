@@ -3,8 +3,12 @@ package com.raina.siliconvalleytrail;
 import com.raina.siliconvalleytrail.data.LandmarkData;
 import com.raina.siliconvalleytrail.model.*;
 import com.raina.siliconvalleytrail.service.*;
-import com.raina.siliconvalleytrail.service.api.StockApiService;
+import com.raina.siliconvalleytrail.service.api.CocaColaStockApiService;
 import com.raina.siliconvalleytrail.service.event.*;
+import com.raina.siliconvalleytrail.service.event.anchored.DenverEvent;
+import com.raina.siliconvalleytrail.service.event.anchored.PikesPeakEvent;
+import com.raina.siliconvalleytrail.service.event.anchored.RenoEvent;
+import com.raina.siliconvalleytrail.service.event.anchored.SidnyEvent;
 import com.raina.siliconvalleytrail.util.GameConstants;
 import com.raina.siliconvalleytrail.util.GameDisplay;
 import com.raina.siliconvalleytrail.model.GameSession;
@@ -100,7 +104,7 @@ public class Main {
         session.setCurrentLandmark("Lincoln");
         session.addLandmarkVisited("Lincoln");
 
-        StockApiService stockApi = new StockApiService();
+        CocaColaStockApiService stockApi = new CocaColaStockApiService();
         double koPrice1 = stockApi.getKoClosePrice();
         session.setInitialKoPrice(koPrice1);
         session.setLastKoPrice(koPrice1);
@@ -121,7 +125,7 @@ public class Main {
         Map<String, Landmark> landmarks = LandmarkData.getLandmarks();
         TravelService routeService = new TravelService();
         GameService gameService = new GameService();
-        StockApiService stockApi = new StockApiService();
+        CocaColaStockApiService stockApi = new CocaColaStockApiService();
         RandomEventService randomEventService = new RandomEventService();
 
         while (!session.isGameOver() && !session.hasArrived()) {

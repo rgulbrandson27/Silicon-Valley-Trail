@@ -1,6 +1,6 @@
 package com.raina.siliconvalleytrail.model;
 
-import com.raina.siliconvalleytrail.service.event.AnchoredEvent;
+import com.raina.siliconvalleytrail.service.event.anchored.AnchoredEvent;
 
 import java.util.List;
 

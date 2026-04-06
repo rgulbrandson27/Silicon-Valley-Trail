@@ -1,7 +1,7 @@
 package com.raina.siliconvalleytrail.data;
 
 import com.raina.siliconvalleytrail.model.*;
-import com.raina.siliconvalleytrail.service.event.*;
+import com.raina.siliconvalleytrail.service.event.anchored.*;
 
 import java.util.HashMap;
 import java.util.List;
