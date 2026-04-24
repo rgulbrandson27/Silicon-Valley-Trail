@@ -53,30 +53,30 @@ Uses a layered architecture with clear separation between game state, business l
 silicon-valley-trail/
 │
 ├── data/
-│   └── LandmarkData.java        # Static attributes
+│   └── LandmarkData.java        # Static landmark definitions and attached events
 │
 ├── model/
 │   ├── GameSession.java        # Core game state
-│   ├── GameEvent.java          # Base event model
-│   ├── Landmark.java           # Location entity
+│   ├── GameEvent.java          # Base/random event model
+│   ├── Landmark.java           # Immutable location entity with optional AnchoredEvent
 │   ├── CompetitionResult.java  # Outcome tracking
 │   ├── DepartureDate.java      # Game timing
 │   ├── LandmarkType.java       # Enum
-│   ├── LearningCurve.java      # Enum
-│   └── Region.java             # Enum
+│   ├── LearningCurve.java      # Enum (STEEP)
+│   └── Region.java             # Enum with travel cost multiplier
 │
 ├── service/
-│   ├── GameService.java        # Main game loop logic
+│   ├── GameService.java        # Main game loop orchestration
 │   ├── TravelService.java      # Movement & progression
 │   ├── ScoringService.java     # Score calculation
 │   ├── PersistenceService.java # Save/load state
-│   ├── RandomEventService.java # Random event generation
+│   ├── RandomEventService.java # Probabilistic event generation
 │   │
 │   ├── api/                   # External API integrations
 │   │
 │   └── event/
 │       └── anchored/
-│           ├── AnchoredEvent.java
+│           ├── AnchoredEvent.java  #Shared contract for location-specific events
 │           ├── DenverEvent.java
 │           ├── PikesPeakEvent.java
 │           ├── RenoEvent.java
