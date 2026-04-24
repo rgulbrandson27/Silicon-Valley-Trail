@@ -2,7 +2,12 @@
 
  **A replayable survival game inspired by "Oregon Trail"** 
 
->Guide a scrappy startup team from the Silicon Prairie to the Silicon Valley to complete in the 🏆STARTUP WORLD CUP🏆.  Manage your cash and other resources throughout the journey, making strategic decisions, facing unpredictable events.  Game play is influenced by real-world data through public APIs.
+>Guide a scrappy startup team from the Silicon Prairie to the Silicon Valley to compete in the 🏆STARTUP WORLD CUP🏆.  
+> >Manage your cash and other resources throughout the journey.
+> 
+> >Face unpredictable events and make strategic decisions.
+> 
+> >Game play is influenced by real-world data through public APIs.
 ---
 ## Game Overview
 
@@ -12,7 +17,7 @@
 
 ### ⚙️ Features
 - **Game Loop** - Each day you encounter events and choose actions.
-- **Events** - Some events are landmark specific, while others are random.  Events can have a positive or negative impact on team resources.
+- **Events** - Some events are landmark specific, while others are random.
 - **Branching Routes** - Forks in the road enhance user decision-making and game results.
 - **API Integration** 
   - The team's energy source/rations cost may change twice during the game due to live market rates.
@@ -126,8 +131,14 @@ No API keys required for Deck of Cards or OSRM APIs.
 Landmarks are stored in a `HashMap<String, Landmark>` for O(1) name-based lookup. 
 Storage order and game navigation order are decoupled, allowing for game model alterations (ex. new forks in the road) without significant restructuring. Each `Landmark` carries a `List<String> nextLandmarkName(s)` — the graph edges
 
-### Anchored vs Random events — separated by design
-Location-specific events allow for user decisions unique to the location (go to top of Pikes Peak).  These events extend an abstract `AnchoredEvent` superclass and execute upon landmark arrival.  Random events (`RandomEventService`) have a 1-in-3 chance of occurence throughout the game and randomly drawn from an arrayList of 10+ events (flat tire, team conflict).  This separation keeps `Main` clean and allows for easy addition of both anchored and random events.   
+### Anchored vs Random events
+Initially, anchored and random events were separated, with location-based events implemented through inheritance from an abstract `AnchoredEvent` class.
+
+Based on feedback during the interview process, this design was refactored to favor composition. Instead of an "is-a" relationship, each `Landmark` now has an optional `AnchoredEvent` property. When a player arrives, the game checks for and executes the event if present.
+
+Random events remain managed by `RandomEventService`, which applies a 1-in-3 chance of occurrence and selects from a pool of possible events.
+
+This refactor simplifies control flow, avoids unnecessary inheritance, and localizes behavior within each `Landmark`, making the system easier to extend.
 
 ### Jackson for persistence
 Save files are serialized to JSON using Jackson's `ObjectMapper` with pretty-printing enabled for human readability. Each save is named by the player and stored in the `saves/` directory with the session UUID appended to prevent collisions. The no-arg constructor on `GameSession` enables Jackson deserialization without requiring additional configuration.
@@ -139,7 +150,7 @@ Each `Region` enum carries a `costMultiplier`. Travel costs scale automatically 
 The win/lose condition is time-based (reach San Francisco by November 18th), not landmark-count-based. This preserves extensibility — adding new landmarks between existing ones never breaks the core deadline mechanic. Starting rations scale with departure date (`totalDays / 2`), so difficulty is built into the departure choice itself.
 
 ### Miles remaining as display stat
-`milesRemaining` always reflects real driving distance from current landmark to San Francisco, regardless of which fork the player took. This ensures the stat is always meaningful and accurate — a player who took the Chimney Rock detour and a player who went through Sidney both see honest miles-to-SF figures once they converge at Denver.
+`MilesRemaining` always reflects real driving distance from current landmark to San Francisco, regardless of which fork the player took. This ensures the stat is always meaningful and accurate — a player who took the Chimney Rock detour and a player who went through Sidney both see honest miles-to-SF figures once they converge at Denver.
 
 ---
 
@@ -176,7 +187,7 @@ mvn test
 
 ## AI Usage
 
-Claude (Anthropic) and OpenAi/ChatGPT were used as instructures thoughtout collaborative design and architecture partner throughout development.   Decisions were discussed and suggestions were challenged.  The developer made final decisions regarding game sturcture.  
+Claude (Anthropic) and OpenAi/ChatGPT were used as instructors thoughtout collaborative design and architecture partner throughout development.   Decisions were discussed and suggestions were challenged.  The developer made final decisions regarding game sturcture.  
 
 Code was written by the developer with AI assistance for reviewing structure, catching inconsistencies, and generating boilerplate. The game design, route, landmark selection, event narratives, scoring system, and overall creative direction are original. AI helped implement decisions; the developer made them.
 

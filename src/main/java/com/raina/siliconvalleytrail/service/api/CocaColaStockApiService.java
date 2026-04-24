@@ -12,7 +12,7 @@ public class CocaColaStockApiService {
 
     private static final String BASE_URL = "https://api.twelvedata.com/time_series";
     private static final String SYMBOL = "KO";
-    private static final double MOCK_PRICE = 75.00;  // fallback price
+    private static final double MOCK_PRICE = 75.0000;  // fallback price
 
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
